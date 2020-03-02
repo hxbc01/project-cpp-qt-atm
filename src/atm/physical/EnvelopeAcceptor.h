@@ -1,0 +1,7 @@
+#ifndef ENVELOPEACCEPTOR_H
+#define ENVELOPEACCEPTOR_H
+
+
+
+
+#endif // ENVELOPEACCEPTOR_H

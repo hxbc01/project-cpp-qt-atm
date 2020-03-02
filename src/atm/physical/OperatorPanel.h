@@ -1,0 +1,7 @@
+#ifndef OPERATORPANEL_H
+#define OPERATORPANEL_H
+
+
+
+
+#endif // OPERATORPANEL_H
