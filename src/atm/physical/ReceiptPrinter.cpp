@@ -1,0 +1,7 @@
+#ifndef RECEIPTPRINTER_H
+#define RECEIPTPRINTER_H
+
+
+
+
+#endif // RECEIPTPRINTER_H

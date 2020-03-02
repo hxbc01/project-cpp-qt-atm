@@ -1,0 +1,7 @@
+#ifndef CASHDISPENSER_H
+#define CASHDISPENSER_H
+
+
+
+
+#endif // CASHDISPENSER_H
