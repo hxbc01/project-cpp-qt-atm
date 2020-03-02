@@ -1,25 +1,37 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.1.0)
 
 project(ATM)
 
-find_package(Qt5 COMPONENTS REQUIRED Core Gui Widgets)
+# flags
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
 
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+if(CMAKE_VERSION VERSION_LESS "3.7.0")
+    set(CMAKE_INCLUDE_CURRENT_DIR ON)
+endif()
 
-set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-include_directories(${Qt5Widgets_INCLUDES})
+# include files
+include_directories(./include
+    ./src
+    ./src/atm
+    ./src/atm/physical
+    ./src/atm/transaction
+    ./src/banking
+    ./src/simulation
+)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# target
+add_executable(ATM
+    ./src/main.cpp
+)
+
+# 3rd party libs
 
 
-add_definitions(${Qt5Widgets_DEFINITIONS})
 
-add_subdirectory(src)
 
-add_executable(${PROJECT_NAME} "app/main.cpp")
-
-target_link_libraries(${PROJECT_NAME} ATMLib -lpthread
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Widgets)
+target_link_libraries(ATM Qt5::Widgets)
