@@ -6,6 +6,7 @@ project(ATM)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 if(CMAKE_VERSION VERSION_LESS "3.7.0")
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -14,6 +15,8 @@ endif()
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 # include files
+include_directories(${Qt5Widgets_INCLUDE_DIRS})
+
 include_directories(./include
     ./src
     ./src/atm
@@ -23,9 +26,14 @@ include_directories(./include
     ./src/simulation
 )
 
+add_subdirectory(./src/banking)
+
+
+set (INTERN_LINK_LIBS ${INTERN_LINK_LIBS} banking)
+set (EXTERN_LINK_LIBS ${EXTERN_LINK_LIBS} Qt5::Widgets)
 
 # target
-add_executable(ATM
+add_executable(${PROJECT_NAME}
     ./src/main.cpp
 )
 
@@ -34,4 +42,4 @@ add_executable(ATM
 
 
 
-target_link_libraries(ATM Qt5::Widgets)
+target_link_libraries(${PROJECT_NAME} ${INTERN_LINK_LIBS} ${EXTERN_LINK_LIBS})
