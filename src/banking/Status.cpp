@@ -1,7 +1,4 @@
-#ifndef STATUS_H
-#define STATUS_H
+#include "Status.h"
 
 
 
-
-#endif // STATUS_H
