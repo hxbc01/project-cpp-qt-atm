@@ -17,6 +17,9 @@ class Money
 {
 
 public:
+    /** Default Constructor
+     */
+    Money();
     /** Constructor
      *
      *  @param dollars whole dollar amount
