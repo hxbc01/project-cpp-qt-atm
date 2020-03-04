@@ -1,7 +1,15 @@
-#ifndef ACCOUNTINFORMATION_H
-#define ACCOUNTINFORMATION_H
+#include <QDebug>
+#include "AccountInformation.h"
+
+banking::AccountInformation::AccountInformation()
+{
+
+}
+
+banking::AccountInformation::~AccountInformation()
+{
+
+}
 
 
 
-
-#endif // ACCOUNTINFORMATION_H
