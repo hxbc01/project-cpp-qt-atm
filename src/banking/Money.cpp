@@ -1,7 +1,7 @@
 #include <QDebug>
 #include "Money.h"
 
-banking::Money::Money()
+banking::Money::Money():Money(0)
 {
 
 

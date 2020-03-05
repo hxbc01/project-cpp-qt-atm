@@ -29,7 +29,7 @@ int banking::Message::getMessageCode()
     return m_messageCode;
 }
 
-Card banking::Message::getCard()
+banking::Card banking::Message::getCard()
 {
     return m_card;
 }
@@ -54,10 +54,10 @@ int banking::Message::getToAccount()
     return m_toAccount;
 }
 
-//Money banking::Message::getAmount()
-//{
-//    //return m_amount;
-//}
+banking::Money banking::Message::getAmount()
+{
+    return m_amount;
+}
 
 
 QString banking::Message::toString()

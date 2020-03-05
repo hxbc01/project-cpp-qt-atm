@@ -19,15 +19,15 @@ void banking::Balances::setBalances(Money a_total, Money a_available)
 }
 
 
-//Money banking::Balances::getTotal()
-//{
-//    return m_total;
-//}
+banking::Money banking::Balances::getTotal()
+{
+    return m_total;
+}
 
-//Money banking::Balances::getAvailable()
-//{
-//    return m_available;
-//}
+banking::Money banking::Balances::getAvailable()
+{
+    return m_available;
+}
 
 
 

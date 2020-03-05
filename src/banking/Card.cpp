@@ -1,7 +1,7 @@
 #include <QDebug>
 #include "Card.h"
 
-banking::Card::Card()
+banking::Card::Card(): Card(0)
 {
 
 }
