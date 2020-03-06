@@ -1,5 +1,10 @@
 #include "Message.h"
 
+banking::Message::Message()
+{
+
+}
+
 banking::Message::Message(int a_messageCode, Card a_card, int a_pin,
                           int a_serialNumber, int a_fromAccount,
                           int a_toAccount, Money a_amount)
@@ -29,32 +34,32 @@ int banking::Message::getMessageCode()
     return m_messageCode;
 }
 
-banking::Card banking::Message::getCard()
+banking::Card banking::Message::getCard() const
 {
     return m_card;
 }
 
-int banking::Message::getPIN()
+int banking::Message::getPIN() const
 {
     return m_pin;
 }
 
-int banking::Message::getSerialNumber()
+int banking::Message::getSerialNumber() const
 {
     return m_serialNumber;
 }
 
-int banking::Message::getFromAccount()
+int banking::Message::getFromAccount() const
 {
     return m_fromAccount;
 }
 
-int banking::Message::getToAccount()
+int banking::Message::getToAccount() const
 {
     return m_toAccount;
 }
 
-banking::Money banking::Message::getAmount()
+banking::Money banking::Message::getAmount() const
 {
     return m_amount;
 }

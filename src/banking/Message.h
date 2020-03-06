@@ -24,6 +24,9 @@ class Message
 {
 
 public:
+    /** Default Constructor
+     */
+    Message();
     /** Constructor
      *
      *  @param messageCode identifying the type of message
@@ -66,32 +69,32 @@ public:
      *
      *  @return the customer's card
      */
-    Card getCard();
+    Card getCard() const;
     /** Accessor for PIN
      *
      *  @return the PIN entered by the customer
      */
-    int getPIN();
+    int getPIN() const;
     /** Accessor for transaction serial number
      *
      *  @return the serial number of the transaction
      */
-    int getSerialNumber();
+    int getSerialNumber() const;
     /** Accessor for "from" account
      *
      *  @return the type of the "from" account
      */
-    int getFromAccount();
+    int getFromAccount() const;
     /** Accessor for "to" account
      *
      *  @return the type of the "to" account
      */
-    int getToAccount();
+    int getToAccount() const;
     /** Accessor for acmount
       *
       *  @return the transaction amount
       */
-    Money getAmount();
+    Money getAmount() const;
 
     // Possible values for messageCode
 
