@@ -1,7 +1,32 @@
-#ifndef CARDREADER_H
-#define CARDREADER_H
 
+#include <QDebug>
+#include "CardReader.h"
 
+atm::physical::CardReader::CardReader()
+{
 
+}
 
-#endif // CARDREADER_H
+atm::physical::CardReader::CardReader(ATM a_atm)
+{
+
+}
+atm::physical::CardReader::~CardReader()
+{
+
+}
+
+Card atm::physical::CardReader::readCard()
+{
+
+}
+
+void atm::physical::CardReader::ejectCard()
+{
+
+}
+
+void atm::physical::CardReader::retainCard()
+{
+
+}
