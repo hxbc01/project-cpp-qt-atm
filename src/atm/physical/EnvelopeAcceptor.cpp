@@ -1,7 +1,22 @@
-#ifndef ENVELOPEACCEPTOR_H
-#define ENVELOPEACCEPTOR_H
 
+#include <QDebug>
+#include "EnvelopeAcceptor.h"
 
+atm::physical::EnvelopeAcceptor::EnvelopeAcceptor()
+{
 
+}
 
-#endif // ENVELOPEACCEPTOR_H
+atm::physical::EnvelopeAcceptor::EnvelopeAcceptor(Log a_log)
+{
+    m_log = a_log;
+}
+atm::physical::EnvelopeAcceptor::~EnvelopeAcceptor()
+{
+
+}
+
+void atm::physical::EnvelopeAcceptor::acceptEnvelope()
+{
+
+}
