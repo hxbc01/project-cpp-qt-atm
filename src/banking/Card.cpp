@@ -15,7 +15,7 @@ banking::Card::~Card()
 
 }
 
-int banking::Card::getNumber()
+int banking::Card::getNumber() const
 {
     return m_number;
 }

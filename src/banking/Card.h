@@ -31,7 +31,7 @@ public:
       *
       *  @return the number of the card
       */
-    int getNumber();
+    int getNumber() const;
 
 protected:
 
