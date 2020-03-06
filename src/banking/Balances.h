@@ -35,12 +35,12 @@ public:
      *
      *  @return total balance in the account
      */
-    Money getTotal();
+    Money getTotal() const;
     /** Accessor for available balance
      *
      *  @return available balance
      */
-    Money getAvailable();
+    Money getAvailable() const;
 
 protected:
 

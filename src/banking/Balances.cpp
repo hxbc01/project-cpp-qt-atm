@@ -19,12 +19,12 @@ void banking::Balances::setBalances(Money a_total, Money a_available)
 }
 
 
-banking::Money banking::Balances::getTotal()
+banking::Money banking::Balances::getTotal() const
 {
     return m_total;
 }
 
-banking::Money banking::Balances::getAvailable()
+banking::Money banking::Balances::getAvailable() const
 {
     return m_available;
 }
