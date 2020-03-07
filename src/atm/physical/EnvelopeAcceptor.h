@@ -32,7 +32,7 @@ public:
      *
      *  @param log the log in which to record receiving an envelope
      */
-    EnvelopeAcceptor(Log a_log);
+    EnvelopeAcceptor(Log *ap_log);
     /** Destructor
      */
     ~EnvelopeAcceptor();

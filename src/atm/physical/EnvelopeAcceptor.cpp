@@ -7,9 +7,9 @@ atm::physical::EnvelopeAcceptor::EnvelopeAcceptor()
 
 }
 
-atm::physical::EnvelopeAcceptor::EnvelopeAcceptor(Log a_log)
+atm::physical::EnvelopeAcceptor::EnvelopeAcceptor(Log *ap_log)
 {
-    m_log = a_log;
+
 }
 atm::physical::EnvelopeAcceptor::~EnvelopeAcceptor()
 {
