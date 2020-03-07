@@ -8,6 +8,15 @@
 #ifndef ATM_H
 #define ATM_H
 #include <QString>
+class CardReader;
+class CashDispenser;
+class CustomerConsole;
+class EnvelopeAcceptor;
+class Log;
+class NetworkToBank;
+class OperatorPanel;
+class ReceiptPrinter;
+using namespace atm::physical;
 
 /** Representation for the ATM itself.  An object of this class "owns"
  *  the objects representing the component parts of the ATM, and the
@@ -32,7 +41,7 @@ public:
      *  @param bankName the name of the bank owning this ATM
      *  @param bankAddress the Internet address of the bank
      */
-    ATM(int id, String place, String bankName, InetAddress bankAddress);
+    ATM(int id, QString place, QString bankName, InetAddress bankAddress);
 
     /** Destructor
      */
@@ -71,35 +80,37 @@ private:
 
     /** The ATM's card reader
      */
-    CardReader m_cardReader;
+    CardReader *mp_cardReader=nullptr;
 
     /** The ATM's cash dispenser
      */
-    CashDispenser m_cashDispenser;
+    CashDispenser *mp_cashDispenser=nullptr;
 
     /** The ATM's customer console
      */
-    CustomerConsole m_customerConsole;
+    CustomerConsole *mp_customerConsole=nullptr;
+
 
     /** The ATM's envelope acceptor
      */
-    EnvelopeAcceptor m_envelopeAcceptor;
+    EnvelopeAcceptor *mp_envelopeAcceptor=nullptr;
+
 
     /** The ATM's log
      */
-    Log m_log;
+    Log *mp_log=nullptr;
 
     /** The ATM's network connection to the bank
      */
-    NetworkToBank m_networkToBank;
+    NetworkToBank *mp_networkToBank=nullptr;
 
     /** The ATM's operator panel
      */
-    OperatorPanel m_operatorPanel;
+    OperatorPanel *mp_operatorPanel=nullptr;
 
     /** The ATM's receipt printer
      */
-    ReceiptPrinter m_receiptPrinter;
+    ReceiptPrinter *mp_receiptPrinter=nullptr;
 
 
     // State information
