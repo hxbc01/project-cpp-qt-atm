@@ -33,7 +33,7 @@ public:
      *
      *  @param atm the ATM that owns this card reader
      */
-    CardReader(ATM a_atm);
+    CardReader(ATM *ap_atm);
     /** Destructor
      */
     ~CardReader();

@@ -7,7 +7,7 @@ atm::physical::CardReader::CardReader()
 
 }
 
-atm::physical::CardReader::CardReader(ATM a_atm)
+atm::physical::CardReader::CardReader(ATM *ap_atm)
 {
 
 }
