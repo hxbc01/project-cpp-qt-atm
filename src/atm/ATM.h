@@ -16,7 +16,7 @@ class Log;
 class NetworkToBank;
 class OperatorPanel;
 class ReceiptPrinter;
-using namespace atm::physical;
+
 
 /** Representation for the ATM itself.  An object of this class "owns"
  *  the objects representing the component parts of the ATM, and the
@@ -41,7 +41,7 @@ public:
      *  @param bankName the name of the bank owning this ATM
      *  @param bankAddress the Internet address of the bank
      */
-    ATM(int id, QString place, QString bankName, InetAddress bankAddress);
+    ATM(int id, QString place, QString bankName, QString bankAddress);
 
     /** Destructor
      */
@@ -51,6 +51,7 @@ public:
       *  @return the number of the card
       */
     int getNumber() const;
+
 
 protected:
 
@@ -73,7 +74,7 @@ private:
 
     /** Internet address of the bank
      */
-    InetAddress m_bankAddress;
+    QString m_bankAddress;
 
 
     // Instance variables referring to the omponent parts of the ATM
@@ -114,6 +115,19 @@ private:
 
 
     // State information
+    // Possible values for state
+
+    /** The ATM is off.  The switch must be turned on before it can operate
+     */
+    static const int OFF_STATE = 0;
+
+    /** The ATM is on, but idle.  It can service a customer, or it can be shut down
+     */
+    static const int IDLE_STATE = 1;
+
+    /** The ATM is servicing a customer.
+     */
+    static const int SERVING_CUSTOMER_STATE = 2;
 
 
     /** The current state of the ATM - one of the possible values listed below
@@ -131,22 +145,6 @@ private:
      *  card
      */
     bool m_cardInserted;
-
-
-    // Possible values for state
-
-
-    /** The ATM is off.  The switch must be turned on before it can operate
-     */
-    static const int m_OFF_STATE = 0;
-
-    /** The ATM is on, but idle.  It can service a customer, or it can be shut down
-     */
-    static const int m_IDLE_STATE = 1;
-
-    /** The ATM is servicing a customer.
-     */
-    static const int m_SERVING_CUSTOMER_STATE = 2;
 
 };
 }
