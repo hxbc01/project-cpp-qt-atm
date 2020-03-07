@@ -1,7 +1,26 @@
-#ifndef SESSION_H
-#define SESSION_H
+#include <QDebug>
+#include "Session.h"
 
+atm::Session::Session()
+{
 
+}
+atm::Session::Session(ATM *ap_atm)
+{
 
+}
 
-#endif // SESSION_H
+atm::Session::~Session()
+{
+
+}
+
+void atm::Session::performSession()
+{
+
+}
+
+void atm::Session::setPIN(int pin)
+{
+
+}
