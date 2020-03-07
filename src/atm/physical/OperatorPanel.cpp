@@ -1,7 +1,21 @@
-#ifndef OPERATORPANEL_H
-#define OPERATORPANEL_H
+#include <QDebug>
+#include "OperatorPanel.h"
 
+atm::physical::OperatorPanel::OperatorPanel()
+{
 
+}
+atm::physical::OperatorPanel::OperatorPanel(ATM *ap_atm)
+{
 
+}
 
-#endif // OPERATORPANEL_H
+atm::physical::OperatorPanel::~OperatorPanel()
+{
+
+}
+
+Money atm::physical::OperatorPanel::getInitialCash()
+{
+
+}
