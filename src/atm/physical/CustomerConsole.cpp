@@ -1,7 +1,14 @@
-#ifndef CUSTOMERCONSOLE_H
-#define CUSTOMERCONSOLE_H
 
+#include <QDebug>
+#include "CustomerConsole.h"
 
+atm::physical::CustomerConsole::CustomerConsole()
+{
 
+}
 
-#endif // CUSTOMERCONSOLE_H
+atm::physical::CustomerConsole::~CustomerConsole()
+{
+
+}
+
