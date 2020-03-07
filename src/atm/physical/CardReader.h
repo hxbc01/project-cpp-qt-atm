@@ -7,7 +7,7 @@
  */
 #ifndef CARDREADER_H
 #define CARDREADER_H
-#include "ATM.h"
+
 //#include "Card.h"
 /** Manager for the ATM's card reader.  In a real ATM, this would
  *  manage a physical device; in this simulation, it uses classes
@@ -16,6 +16,7 @@
 // forward declared dependencies
 //class Message;
 //class Status;
+class ATM;
 class Card;
 
 namespace atm
