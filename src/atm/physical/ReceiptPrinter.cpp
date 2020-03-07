@@ -1,7 +1,17 @@
-#ifndef RECEIPTPRINTER_H
-#define RECEIPTPRINTER_H
+#include <QDebug>
+#include "ReceiptPrinter.h"
 
+atm::physical::ReceiptPrinter::ReceiptPrinter()
+{
 
+}
 
+atm::physical::ReceiptPrinter::~ReceiptPrinter()
+{
 
-#endif // RECEIPTPRINTER_H
+}
+
+void atm::physical::ReceiptPrinter::printReceipt(Receipt *ap_receipt)
+{
+
+}
