@@ -8,6 +8,14 @@
 #ifndef ATM_H
 #define ATM_H
 #include <QString>
+
+/** Representation for the ATM itself.  An object of this class "owns"
+ *  the objects representing the component parts of the ATM, and the
+ *  communications network, and is responsible for creating customer
+ *  sessions which then use it to gain access to the component parts.
+ *  This is an active class - when an instance of the class is created,
+ *  a thread is executed that actually runs the system.
+ */
 class CardReader;
 class CashDispenser;
 class CustomerConsole;
@@ -17,14 +25,6 @@ class NetworkToBank;
 class OperatorPanel;
 class ReceiptPrinter;
 
-
-/** Representation for the ATM itself.  An object of this class "owns"
- *  the objects representing the component parts of the ATM, and the
- *  communications network, and is responsible for creating customer
- *  sessions which then use it to gain access to the component parts.
- *  This is an active class - when an instance of the class is created,
- *  a thread is executed that actually runs the system.
- */
 namespace atm
 {
 class ATM
@@ -41,7 +41,7 @@ public:
      *  @param bankName the name of the bank owning this ATM
      *  @param bankAddress the Internet address of the bank
      */
-    ATM(int id, QString place, QString bankName, QString bankAddress);
+    ATM(int a_id, QString a_place, QString a_bankName, QString a_bankAddress);
 
     /** Destructor
      */

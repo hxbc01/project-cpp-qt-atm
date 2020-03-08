@@ -14,9 +14,9 @@ atm::ATM::ATM()
 
 }
 
-atm::ATM::ATM(int id, QString a_place, QString a_bankName, QString a_bankAddress)
+atm::ATM::ATM(int a_id, QString a_place, QString a_bankName, QString a_bankAddress)
 {
-    m_id = id;
+    m_id = a_id;
     m_place = a_place;
     m_bankName = a_bankName;
     m_bankAddress = a_bankAddress;
@@ -52,18 +52,25 @@ atm::ATM::~ATM()
 {
     delete mp_log;
     mp_log = nullptr;
+
     delete mp_cardReader;
     mp_cardReader = nullptr;
+
     delete mp_cashDispenser;
     mp_cashDispenser = nullptr;
+
     delete mp_customerConsole;
     mp_customerConsole = nullptr;
+
     delete mp_envelopeAcceptor;
     mp_envelopeAcceptor = nullptr;
+
     delete mp_networkToBank;
     mp_networkToBank = nullptr;
+
     delete mp_operatorPanel;
     mp_operatorPanel = nullptr;
+
     delete mp_receiptPrinter;
     mp_receiptPrinter = nullptr;
 }
