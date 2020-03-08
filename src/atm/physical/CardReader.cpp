@@ -1,6 +1,7 @@
 #include <QDebug>
 #include "CardReader.h"
 
+
 atm::physical::CardReader::CardReader()
 {
 

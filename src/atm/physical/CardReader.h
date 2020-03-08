@@ -8,6 +8,7 @@
 #ifndef CARDREADER_H
 #define CARDREADER_H
 
+
 //#include "Card.h"
 /** Manager for the ATM's card reader.  In a real ATM, this would
  *  manage a physical device; in this simulation, it uses classes
@@ -18,6 +19,7 @@
 //class Status;
 class ATM;
 class Card;
+
 
 namespace atm
 {
@@ -59,7 +61,7 @@ protected:
 
 
 private:
-    ATM m_atm;
+    ATM *mp_atm=nullptr;
 
 };
 }
