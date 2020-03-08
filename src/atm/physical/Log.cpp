@@ -11,18 +11,18 @@ atm::physical::Log::~Log()
 
 }
 
-void atm::physical::Log::logSend(banking::Message message)
+void atm::physical::Log::logSend(Message *ap_message)
 {
 
 }
 
 
-void atm::physical::Log::logResponse(banking::Status response)
+void atm::physical::Log::logResponse(Status *ap_response)
 {
 
 }
 
-void atm::physical::Log::logCashDispensed(banking::Money amount)
+void atm::physical::Log::logCashDispensed(Money *ap_amount)
 {
 
 }

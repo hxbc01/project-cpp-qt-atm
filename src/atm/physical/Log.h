@@ -7,17 +7,15 @@
  */
 #ifndef LOG_H
 #define LOG_H
-#include "Message.h"
-#include "Status.h"
-#include "Money.h"
+
 /** Manager for the ATM's internal log.  In a real ATM, this would
  *  manage a physical device; in this simulation,  it uses classes
  *  in package simulation to simulate the device.
  */
 // forward declared dependencies
-//class Message;
-//class Status;
-//class Money;
+class Message;
+class Status;
+class Money;
 
 namespace atm
 {
@@ -37,17 +35,17 @@ public:
      *
      *  @param message the message to be logged
      */
-    void logSend(banking::Message message);
+    void logSend(Message *ap_message);
     /** Log a response received from the bank
      *
      *  @param status the status object returned by the bank in response
      */
-    void logResponse(banking::Status response);
+    void logResponse(Status *ap_response);
     /** Log the dispensing of cash by the cash dispenser
      *
      *  @param amount the amount of cash being dispensed
      */
-    void logCashDispensed(banking::Money amount);
+    void logCashDispensed(Money *ap_amount);
     /** Log accepting an envelope.  This method is only called if an envelope
      *  is actually received from the customer
      */
