@@ -8,7 +8,7 @@
 #ifndef CASHDISPENSER_H
 #define CASHDISPENSER_H
 #include "Log.h"
-s
+
 class Money;
 /** Manager for the ATM's cash dispenser.  In a real ATM, this would
  *  manage a physical device; in this simulation,  it uses classes
