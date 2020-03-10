@@ -13,10 +13,12 @@
  *  in package simulation to simulate the device.
  */
 // forward declared dependencies
+namespace banking
+{
 class Message;
 class Status;
 class Money;
-
+}
 namespace atm
 {
 namespace physical
@@ -35,17 +37,17 @@ public:
      *
      *  @param message the message to be logged
      */
-    void logSend(Message *ap_message);
+    void logSend(banking::Message *ap_message);
     /** Log a response received from the bank
      *
      *  @param status the status object returned by the bank in response
      */
-    void logResponse(Status *ap_response);
+    void logResponse(banking::Status *ap_response);
     /** Log the dispensing of cash by the cash dispenser
      *
      *  @param amount the amount of cash being dispensed
      */
-    void logCashDispensed(Money *ap_amount);
+    void logCashDispensed(banking::Money *ap_amount);
     /** Log accepting an envelope.  This method is only called if an envelope
      *  is actually received from the customer
      */
