@@ -31,7 +31,7 @@ public:
      *
      *  @param message the message to display
      */
-    void display(QString message);
+    void display(QString a_message);
     /** Read a PIN entered by the customer (echoed as asterisks)
      *
      *  @param prompt the message to display prompting the customer to enter PIN

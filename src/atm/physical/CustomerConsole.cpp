@@ -12,3 +12,8 @@ atm::physical::CustomerConsole::~CustomerConsole()
 
 }
 
+void atm::physical::CustomerConsole::display(QString a_message)
+{
+    qDebug()<< a_message;
+}
+
