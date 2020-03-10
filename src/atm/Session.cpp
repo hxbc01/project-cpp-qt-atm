@@ -20,7 +20,7 @@ void atm::Session::performSession()
 
 }
 
-void atm::Session::setPIN(int pin)
+void atm::Session::setPIN(int a_pin)
 {
 
 }

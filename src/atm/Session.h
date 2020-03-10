@@ -9,7 +9,10 @@
 #define SESSION_H
 /** Representation for one ATM
  * session serving a single customer. */
+namespace atm
+{
 class ATM;
+}
 namespace atm
 {
 class Session
@@ -36,7 +39,7 @@ public:
       *
       *  @param pin the newly entered pin
       */
-    void setPIN(int pin);
+    void setPIN(int a_pin);
 
 protected:
 
