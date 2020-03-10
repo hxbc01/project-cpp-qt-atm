@@ -8,7 +8,8 @@
 #ifndef ATM_H
 #define ATM_H
 #include <QString>
-
+#include <mutex>
+#include <condition_variable>
 /** Representation for the ATM itself.  An object of this class "owns"
  *  the objects representing the component parts of the ATM, and the
  *  communications network, and is responsible for creating customer
@@ -16,15 +17,20 @@
  *  This is an active class - when an instance of the class is created,
  *  a thread is executed that actually runs the system.
  */
+namespace atm
+{
+namespace physical
+{
+class CustomerConsole;
 class CardReader;
 class CashDispenser;
-class CustomerConsole;
 class EnvelopeAcceptor;
 class Log;
 class NetworkToBank;
 class OperatorPanel;
 class ReceiptPrinter;
-
+} // namespace physical
+} // namespace atm
 namespace atm
 {
 class ATM
@@ -46,17 +52,103 @@ public:
     /** Destructor
      */
     ~ATM();
-    /** Accessor for number
-      *
-      *  @return the number of the card
+    /** Overload () operator to make ATM objects callable.
+      * This method contains the code to be executed by the
+      * ATM thread
       */
-    int getNumber() const;
+    void operator()();
+    /** Inform the ATM (thread) that the switch on the operator console has been moved
+     *  to the "on" position.
+     */
+    void switchOn();
+    /** Inform the ATM that the switch on the operator console has been moved
+     *  to the "off" position.
+     */
+    void switchOff();
+    /** Inform the ATM that a card has been inserted into the card reader.
+     */
+    void cardInserted();
+
+    // The following methods allow objects of other classes to access component
+    // parts of the ATM
+
+    /** Accessor for id
+     *
+     *  @return unique id of this ATM
+     */
+    int getID();
+    /** Accessor for place
+     *
+     *  @return physical location of this ATM
+     */
+    QString getPlace();
+    /** Accessor for bank name
+     *
+     *  @return name of bank owning this ATM
+     */
+    QString getBankName();
+    /** Accessor for bank address
+     *
+     *  @return address of bank owning this ATM
+     */
+    QString getBankAddress();
+    /** Accessor for card reader
+     *
+     *  @return card reader component of this ATM
+     */
+    atm::physical::CardReader* getCardReader();
+    /** Accessor for cash dispenser
+       *
+       *  @return cash dispenser component of this ATM
+       */
+    atm::physical::CashDispenser* getCashDispenser();
+    /** Accessor for customer console
+     *
+     *  @return customer console component of this ATM
+     */
+    atm::physical::CustomerConsole* getCustomerConsole();
+    /** Accessor for envelope acceptor
+     *
+     *  @return envelope acceptor component of this ATM
+     */
+    atm::physical::EnvelopeAcceptor* getEnvelopeAcceptor();
+    /** Accessor for log
+     *
+     *  @return log component of this ATM
+     */
+    atm::physical::Log* getLog();
+    /** Accessor for network to bank
+     *
+     *  @return network connection to bank of this ATM
+     */
+    atm::physical::NetworkToBank* getNetworkToBank();
+    /** Accessor for operator panel
+     *
+     *  @return operator panel component of this ATM
+     */
+    atm::physical::OperatorPanel* getOperatorPanel();
+    /** Accessor for receipt printer
+     *
+     *  @return receipt printer component of this ATM
+     */
+    atm::physical::ReceiptPrinter* getReceiptPrinter();
+
+
 
 
 protected:
 
 
 private:
+    // Private methods
+
+     /** Perform the System Startup use case when switch is turned on
+      */
+    void performStartup();
+    /** Perform the System Shutdown use case when switch is turned off
+     */
+    void performShutdown();
+
     // Instance variables recording information about the ATM
 
 
@@ -81,37 +173,37 @@ private:
 
     /** The ATM's card reader
      */
-    CardReader *mp_cardReader=nullptr;
+    atm::physical::CardReader *mp_cardReader=nullptr;
 
     /** The ATM's cash dispenser
      */
-    CashDispenser *mp_cashDispenser=nullptr;
+    atm::physical::CashDispenser *mp_cashDispenser=nullptr;
 
     /** The ATM's customer console
      */
-    CustomerConsole *mp_customerConsole=nullptr;
+    atm::physical::CustomerConsole *mp_customerConsole=nullptr;
 
 
     /** The ATM's envelope acceptor
      */
-    EnvelopeAcceptor *mp_envelopeAcceptor=nullptr;
+    atm::physical::EnvelopeAcceptor *mp_envelopeAcceptor=nullptr;
 
 
     /** The ATM's log
      */
-    Log *mp_log=nullptr;
+    atm::physical::Log *mp_log=nullptr;
 
     /** The ATM's network connection to the bank
      */
-    NetworkToBank *mp_networkToBank=nullptr;
+    atm::physical::NetworkToBank *mp_networkToBank=nullptr;
 
     /** The ATM's operator panel
      */
-    OperatorPanel *mp_operatorPanel=nullptr;
+    atm::physical::OperatorPanel *mp_operatorPanel=nullptr;
 
     /** The ATM's receipt printer
      */
-    ReceiptPrinter *mp_receiptPrinter=nullptr;
+    atm::physical::ReceiptPrinter *mp_receiptPrinter=nullptr;
 
 
     // State information
@@ -136,7 +228,7 @@ private:
 
     /** Becomes true when the operator panel informs the ATM that the switch has
      *  been turned on - becomes false when the operator panel informs the ATM
-     *  that the switch has been turned off.
+     *  that the switch has been turned off. This is a shared data
      */
     bool m_switchOn;
 
@@ -146,7 +238,21 @@ private:
      */
     bool m_cardInserted;
 
+    /** mutex object to protect shared data : bool m_switchOn
+     */
+    std::mutex m_mxswitchOn;
+    /** mutex object to protect shared data : bool m_cardInserted
+     */
+    std::mutex m_mxcardInserted;
+    /** condition variable associated with shared data : bool m_cardInserted
+     */
+    std::condition_variable m_cvcardInserted;
+    /** condition variable associated with shared data : bool m_switchOn
+     */
+    std::condition_variable m_cvswitchOn;
+
+
 };
-}
+} // namespace atm
 
 #endif // ATM_H

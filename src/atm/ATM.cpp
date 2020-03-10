@@ -1,13 +1,16 @@
 #include <QDebug>
 #include "ATM.h"
+#include "CustomerConsole.h"
 #include "CardReader.h"
 #include "CashDispenser.h"
-#include "CustomerConsole.h"
 #include "EnvelopeAcceptor.h"
 #include "Log.h"
 #include "NetworkToBank.h"
 #include "OperatorPanel.h"
 #include "ReceiptPrinter.h"
+
+
+#include "Session.h"
 
 atm::ATM::ATM()
 {
@@ -73,4 +76,153 @@ atm::ATM::~ATM()
 
     delete mp_receiptPrinter;
     mp_receiptPrinter = nullptr;
+}
+
+void atm::ATM::operator()()
+{
+    Session *lp_currentSession = nullptr;
+    while (true)
+    {
+        switch (m_state) {
+            case OFF_STATE :
+            {
+                mp_customerConsole->display("Not currently available");
+                try {
+                    std::unique_lock<std::mutex> lk(m_mxswitchOn);
+                    m_cvswitchOn.wait(lk,[this]{return m_switchOn;});
+
+                } catch (std::exception const& e) {
+                    qDebug()<< e.what();
+                }
+                if (m_switchOn) {
+                   performStartup();
+                   m_state = IDLE_STATE;
+                }
+                break;
+            }
+            case IDLE_STATE :
+            {
+                mp_customerConsole->display("Please insert your Card");
+                m_cardInserted = false;
+                try {
+                    std::unique_lock<std::mutex> lk(m_mxcardInserted);
+                    m_cvswitchOn.wait(lk,[this]{return m_cardInserted;});
+                } catch (std::exception const& e) {
+                    qDebug()<< e.what();
+                }
+                if (m_cardInserted) {
+                    lp_currentSession = new Session(this);
+                    m_state = SERVING_CUSTOMER_STATE;
+                }
+                else if (!m_switchOn){
+                    performShutdown();
+                    m_state = OFF_STATE;
+                }
+                break;
+            }
+            case SERVING_CUSTOMER_STATE :
+            {
+                // The following will not return until the session has
+                // completed
+                lp_currentSession->performSession();
+                m_state = IDLE_STATE;
+                break;
+            }
+        }
+    }
+
+}
+
+void atm::ATM::switchOn()
+{
+    std::lock_guard<std::mutex> lk(m_mxswitchOn);
+    m_switchOn = true;
+    m_cvswitchOn.notify_one();
+}
+
+void atm::ATM::switchOff()
+{
+    std::lock_guard<std::mutex> lk(m_mxswitchOn);
+    m_switchOn = false;
+    m_cvswitchOn.notify_one();
+}
+
+void atm::ATM::cardInserted()
+{
+    std::lock_guard<std::mutex> lk(m_mxcardInserted);
+    m_cardInserted = true;
+    m_cvcardInserted.notify_one();
+
+}
+
+void atm::ATM::performStartup()
+{
+    qDebug()<< "Perform System Startup";
+
+}
+
+void atm::ATM::performShutdown()
+{
+    qDebug()<< "Perform System Shutdown";
+
+}
+
+int atm::ATM::getID()
+{
+    return m_id;
+}
+
+QString atm::ATM::getPlace()
+{
+    return m_place;
+}
+
+QString atm::ATM::getBankName()
+{
+    return m_bankName;
+}
+
+QString atm::ATM::getBankAddress()
+{
+    return m_bankAddress;
+}
+
+atm::physical::CardReader* atm::ATM::getCardReader()
+{
+    return mp_cardReader;
+}
+
+atm::physical::CashDispenser* atm::ATM::getCashDispenser()
+{
+    return mp_cashDispenser;
+}
+
+atm::physical::CustomerConsole* atm::ATM::getCustomerConsole()
+{
+    return mp_customerConsole;
+}
+
+atm::physical::EnvelopeAcceptor* atm::ATM::getEnvelopeAcceptor()
+{
+    return mp_envelopeAcceptor;
+}
+
+atm::physical::Log* atm::ATM::getLog()
+{
+    return mp_log;
+}
+
+atm::physical::NetworkToBank* atm::ATM::getNetworkToBank()
+{
+    return mp_networkToBank;
+}
+
+atm::physical::OperatorPanel* atm::ATM::getOperatorPanel()
+{
+    return mp_operatorPanel;
+}
+
+atm::physical::ReceiptPrinter* atm::ATM::getReceiptPrinter()
+{
+    return mp_receiptPrinter;
 }
