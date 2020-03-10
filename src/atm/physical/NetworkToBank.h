@@ -13,10 +13,12 @@
  *  manage a physical device; in this simulation,  it uses classes
  *  in package simulation to simulate the device.
  */
-
+namespace banking
+{
 class Message;
 class Status;
 class Balances;
+}
 namespace atm
 {
 namespace physical
@@ -33,7 +35,7 @@ public:
      *  @param log the log in which to record sending of messages and responses
      *  @param bankAddress the network address of the bank
      */
-    NetworkToBank(Log *ap_log, QString &ar_bankAddress);
+    NetworkToBank(Log *ap_log, QString a_bankAddress);
 
     /** Destructor
      */
@@ -51,7 +53,7 @@ public:
      *         by bank
      *  @return status code returned by bank
      */
-    Status sendMessage(Message message, Balances balances);
+    banking::Status* sendMessage(banking::Message *ap_message, banking::Balances *ap_balances);
 
 
 protected:
@@ -59,6 +61,13 @@ protected:
 
 private:
 
+    // Log into which to record messages
+
+    Log *mp_log = nullptr;
+
+    // Network address of the bank
+
+    QString m_bankAddress;
 
 };
 }
