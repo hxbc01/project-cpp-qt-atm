@@ -1,18 +1,15 @@
-
 #include <QApplication>
 #include <iostream>
 #include <stdio.h>
-#include "Money.h"
-#include "Card.h"
-using namespace std;
-using namespace banking;
+#include <thread>
+#include <ATM.h>
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    QString text = "test";
-    Money money1(100,12),money2(12,1);
-    Card card1(100);
-    cout << card1.getNumber() <<endl;
+    // Create an ATM Object
+    atm::ATM *p_myATM = new atm::ATM(42, "Gordon College", "First National Bank of Podunk",
+                          "nullptr" /* We're not really talking to a bank! */);
+
     return 0;
 }
