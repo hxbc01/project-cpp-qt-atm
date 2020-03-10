@@ -50,7 +50,7 @@ private:
     /** ATM this panel is part of.  The ATM object will be notified when
      * the switch on the panel is turned on or off
      */
-    ATM *mp_atm;
+    ATM *mp_atm = ;
 
 };
 }
