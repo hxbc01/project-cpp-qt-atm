@@ -17,12 +17,19 @@
 // forward declared dependencies
 //class Message;
 //class Status;
-class ATM;
-class Card;
-
 
 namespace atm
 {
+class ATM;
+}
+namespace banking
+{
+class Card;
+}
+
+namespace atm
+{
+
 namespace physical
 {
 class CardReader
@@ -48,7 +55,9 @@ public:
      *  @return Card object representing information on the card if read
      *          successfully, null if not read successfully
      */
-    Card readCard();
+
+//    Card* readCard();
+
     /** Eject the card that is currently inside the reader.
      */
     void ejectCard();

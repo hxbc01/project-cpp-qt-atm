@@ -16,10 +16,10 @@ atm::physical::CardReader::~CardReader()
 
 }
 
-Card atm::physical::CardReader::readCard()
-{
-
-}
+//Card* atm::physical::CardReader::readCard()
+//{
+//return;
+//}
 
 void atm::physical::CardReader::ejectCard()
 {
