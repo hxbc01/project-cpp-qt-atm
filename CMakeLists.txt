@@ -30,8 +30,9 @@ add_subdirectory(./src/banking)
 add_subdirectory(./src/atm/physical)
 add_subdirectory(./src/atm/transaction)
 add_subdirectory(./src/atm)
+add_subdirectory(./src/simulation)
 
-set (INTERN_LINK_LIBS ${INTERN_LINK_LIBS} banking physical atm transaction)
+set (INTERN_LINK_LIBS ${INTERN_LINK_LIBS} banking physical atm transaction simulation)
 set (EXTERN_LINK_LIBS ${EXTERN_LINK_LIBS} Qt5::Widgets)
 
 # target
