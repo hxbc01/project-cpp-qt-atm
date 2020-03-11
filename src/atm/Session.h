@@ -26,7 +26,7 @@ public:
      *
      *  @param atm the ATM on which the session is performed
      */
-    explicit Session(ATM *ap_atm);
+    Session(ATM *ap_atm);
 
     /** Destructor
      */
