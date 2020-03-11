@@ -11,8 +11,14 @@
  *  manage a physical device; in this simulation,  it uses classes
  *  in package simulation to simulate the device.
  */
+namespace atm
+{
 class ATM;
+}
+namespace banking
+{
 class Money;
+}
 namespace atm
 {
 namespace physical
@@ -33,6 +39,7 @@ public:
     /** Destructor
      */
     ~OperatorPanel();
+
     // In a real ATM, code would be needed to sense a change in the state of the
     // switch and notify the ATM - simulated in this case by a button in the GUI
 
@@ -41,7 +48,7 @@ public:
      *  @return dollar value of the bills in the cash dispenser (# of bills x $20)
      */
 
-    Money getInitialCash();
+    banking::Money* getInitialCash();
 
 protected:
 
@@ -50,7 +57,7 @@ private:
     /** ATM this panel is part of.  The ATM object will be notified when
      * the switch on the panel is turned on or off
      */
-    ATM *mp_atm = ;
+    ATM *mp_atm = nullptr;
 
 };
 }
