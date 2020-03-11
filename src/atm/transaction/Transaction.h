@@ -7,13 +7,21 @@
  */
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
+#include <QStringList>
 /** Abstract base class for classes representing the various kinds of
  *  transaction the ATM can perform
  */
+namespace atm
+{
 class ATM;
 class Session;
+}
+namespace banking
+{
 class Card;
-
+class Balances;
+class Message;
+}
 namespace atm
 {
 namespace transaction
@@ -32,7 +40,7 @@ public:
      *  @param card the customer's card
      *  @param pin the PIN entered by the customer
      */
-    Transaction(ATM *ap_atm, Session *ap_session, Card *ap_card, int a_pin);
+    Transaction(ATM *ap_atm, Session *ap_session, banking::Card *ap_card, int a_pin);
 
     /** Destructor
      */
@@ -49,9 +57,8 @@ public:
      *  @exception CustomerConsole.Cancelled if the customer presses cancel instead
      *         of choosing a transaction type
      */
-    /*->public static Transaction makeTransaction(ATM atm, Session session,
-                                              Card card, int pin)
-                                throws CustomerConsole.Cancelled   */
+    static Transaction* makeTransaction(ATM *ap_atm, Session *ap_session, banking::Card *ap_card, int a_pin);
+
 
     /** Peform a transaction.  This method depends on the three abstract methods
      *  that follow to perform the operations unique to each type of transaction
@@ -118,72 +125,70 @@ protected:
 
     /** ATM to use for communication with the customer
      */
-    protected ATM atm;
+    ATM *mp_atm=nullptr;
 
     /** Session in which this transaction is being performed
      */
-    protected Session session;
+    Session *mp_session=nullptr;
 
     /** Customer card for the session this transaction is part of
      */
-    protected Card card;
+    banking::Card *mp_card=nullptr;
+    /** Used to return account balances from the bank
+     */
+    banking::Balances *mp_balances=nullptr;
+    /** Message to bank describing this transaction
+     */
+    banking::Message *mp_message=nullptr;
 
     /** PIN entered or re-entered by customer
      */
-    protected int pin;
+    int m_pin;
 
     /** Serial number of this transaction
      */
-    protected int serialNumber;
+    int m_serialNumber;
 
-    /** Message to bank describing this transaction
-     */
-    protected Message message;
-
-    /** Used to return account balances from the bank
-     */
-    protected Balances balances;
 
 private:
     /** List of available transaction types to display as a menu
      */
-    private static final String [] TRANSACTION_TYPES_MENU =
-        { "Withdrawal", "Deposit", "Transfer", "Balance Inquiry" };
+    static const QStringList TRANSACTION_TYPES_MENU = {"Withdrawal", "Deposit", "Transfer", "Balance Inquiry"};
 
     /** Next serial number - used to assign a unique serial number to
      *  each transaction
      */
-    private static int nextSerialNumber = 1;
+    static int m_nextSerialNumber = 1;
 
     /** The current state of the transaction
      */
-    private int state;
+    int m_state;
 
     // Possible values for state
 
     /** Getting specifics of the transaction from customer
      */
-    private static final int GETTING_SPECIFICS_STATE = 1;
+    static const int GETTING_SPECIFICS_STATE = 1;
 
     /** Sending transaction to bank
      */
-    private static final int SENDING_TO_BANK_STATE = 2;
+    static const int SENDING_TO_BANK_STATE = 2;
 
     /** Performing invalid PIN extension
      */
-    private static final int INVALID_PIN_STATE = 3;
+    static const int INVALID_PIN_STATE = 3;
 
     /** Completing transaction
      */
-    private static final int COMPLETING_TRANSACTION_STATE = 4;
+    static const int COMPLETING_TRANSACTION_STATE = 4;
 
     /** Printing receipt
      */
-    private static final int PRINTING_RECEIPT_STATE = 5;
+    static const int PRINTING_RECEIPT_STATE = 5;
 
     /** Asking if customer wants to do another transaction
      */
-    private static final int ASKING_DO_ANOTHER_STATE = 6;
+    static const int ASKING_DO_ANOTHER_STATE = 6;
 
 };
 }
