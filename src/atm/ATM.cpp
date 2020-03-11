@@ -8,7 +8,7 @@
 #include "NetworkToBank.h"
 #include "OperatorPanel.h"
 #include "ReceiptPrinter.h"
-
+#include "Money.h"
 
 #include "Session.h"
 
@@ -28,21 +28,14 @@ atm::ATM::ATM(int a_id, QString a_place, QString a_bankName, QString a_bankAddre
     // Components parts are present for the life duration of
     // the application
 
-    atm::physical::Log *mp_log = new atm::physical::Log();
-    atm::physical::CardReader *mp_cardReader
-            = new atm::physical::CardReader(this);
-    atm::physical::CashDispenser *mp_cashDispenser
-            = new atm::physical::CashDispenser(mp_log);
-    atm::physical::CustomerConsole *mp_customerConsole
-            = new atm::physical::CustomerConsole();
-    atm::physical::EnvelopeAcceptor *mp_envelopeAcceptor
-            = new atm::physical::EnvelopeAcceptor(mp_log);
-    atm::physical::NetworkToBank *mp_networkToBank
-            = new atm::physical::NetworkToBank(mp_log, a_bankAddress);
-    atm::physical::OperatorPanel *mp_operatorPanel
-            = new atm::physical::OperatorPanel(this);
-    atm::physical::ReceiptPrinter *mp_receiptPrinter
-            = new atm::physical::ReceiptPrinter();
+    mp_log = new atm::physical::Log();
+    mp_cardReader = new atm::physical::CardReader(this);
+    mp_cashDispenser = new atm::physical::CashDispenser(mp_log);
+    mp_customerConsole = new atm::physical::CustomerConsole();
+    mp_envelopeAcceptor = new atm::physical::EnvelopeAcceptor(mp_log);
+    mp_networkToBank = new atm::physical::NetworkToBank(mp_log, a_bankAddress);
+    mp_operatorPanel = new atm::physical::OperatorPanel(this);
+    mp_receiptPrinter = new atm::physical::ReceiptPrinter();
 
 
     // Set up initial conditions when ATM first created
@@ -158,12 +151,16 @@ void atm::ATM::cardInserted()
 void atm::ATM::performStartup()
 {
     qDebug()<< "Perform System Startup";
+    banking::Money *l_initialCash = mp_operatorPanel->getInitialCash();
+    mp_cashDispenser->setInitialCashOnATM(*l_initialCash);
+    mp_networkToBank->openConnection();
 
 }
 
 void atm::ATM::performShutdown()
 {
     qDebug()<< "Perform System Shutdown";
+    mp_networkToBank->closeConnection();
 
 }
 
