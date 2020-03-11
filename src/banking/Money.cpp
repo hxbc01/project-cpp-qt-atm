@@ -28,22 +28,22 @@ banking::Money::~Money()
 
 }
 
-void banking::Money::add(Money a_amountToAdd)
+void banking::Money::add(const Money *a_amountToAdd)
 {
-    m_cents += a_amountToAdd.m_cents;
+    m_cents += a_amountToAdd->m_cents;
 }
 
-void banking::Money::subtract(Money a_amountToSubtract)
+void banking::Money::subtract(const Money *a_amountToSubtract)
 {
-    m_cents -= a_amountToSubtract.m_cents;
+    m_cents -= a_amountToSubtract->m_cents;
 }
 
-bool banking::Money::lessEqual(Money a_compareTo)
+bool banking::Money::lessEqual(const Money *a_compareTo) const
 {
-    return m_cents <= a_compareTo.m_cents;
+    return m_cents <= a_compareTo->m_cents;
 }
 
-QString banking::Money::toString()
+QString banking::Money::toString() const
 {
  return "$" + QString::number(m_cents/100) + (m_cents %100 >= 10  ? "." + QString::number(m_cents % 100) : ".0" + QString::number(m_cents % 100));
 }

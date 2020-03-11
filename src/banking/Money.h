@@ -43,25 +43,25 @@ public:
      *
      *  @return string representation of this amount
      */
-    QString toString();
+    QString toString() const;
     /** Add an amount of money to this
      *
      *  @param amountToAdd the amount to add
      */
-    void add(Money a_amountToAdd);
+    void add(const Money *a_amountToAdd);
     /** Subtract an amount of money from this
      *
      *  @param amountToSubtract the amount to subtract
      *
      *  Precondition: amount must be <= this amount
      */
-    void subtract(Money a_amountToSubtract);
+    void subtract(const Money *a_amountToSubtract);
     /** Compare this to another amount
      *
      *  @param compareTo the amount to compare to
      *  @return true if this amount is <= compareTo amount
      */
-    bool lessEqual(Money a_compareTo);
+    bool lessEqual(const Money *a_compareTo) const;
 
 
 protected:
