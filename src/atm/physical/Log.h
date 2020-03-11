@@ -47,7 +47,7 @@ public:
      *
      *  @param amount the amount of cash being dispensed
      */
-    void logCashDispensed(banking::Money *ap_amount);
+    void logCashDispensed(const banking::Money *ap_amount);
     /** Log accepting an envelope.  This method is only called if an envelope
      *  is actually received from the customer
      */

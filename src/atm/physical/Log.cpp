@@ -22,7 +22,7 @@ void atm::physical::Log::logResponse(banking::Status *ap_response)
 
 }
 
-void atm::physical::Log::logCashDispensed(banking::Money *ap_amount)
+void atm::physical::Log::logCashDispensed(const banking::Money *ap_amount)
 {
 
 }
