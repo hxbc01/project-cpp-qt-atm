@@ -22,7 +22,7 @@ public:
      *
      *  @param number the card number
      */
-    explicit Card(int a_number);
+    Card(int a_number);
 
     /** Destructor
      */
