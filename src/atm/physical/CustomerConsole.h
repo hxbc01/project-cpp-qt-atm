@@ -31,7 +31,7 @@ public:
      *
      *  @param message the message to display
      */
-    void display(QString a_message);
+    void display(QString a_message) const;
     /** Read a PIN entered by the customer (echoed as asterisks)
      *
      *  @param prompt the message to display prompting the customer to enter PIN
@@ -39,7 +39,7 @@ public:
      *  @exception Cancelled if customer presses the CANCEL key before pressing ENTER
      */
 
-    //->int readPIN(QString prompt) throws Cancelled
+    int readPIN(QString prompt) const;
 
     /** Display a menu of options and return choice made by customer
        *
