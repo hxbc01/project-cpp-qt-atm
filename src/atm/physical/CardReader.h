@@ -56,7 +56,7 @@ public:
      *          successfully, null if not read successfully
      */
 
-//    Card* readCard();
+    banking::Card* readCard();
 
     /** Eject the card that is currently inside the reader.
      */
