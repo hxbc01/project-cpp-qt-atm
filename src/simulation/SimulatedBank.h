@@ -21,6 +21,10 @@ class ATM;
 }
 namespace simulation
 {
+class Simulation;
+}
+namespace simulation
+{
 class SimulatedBank
 {
 
@@ -92,10 +96,10 @@ protected:
 private:
     /** The ATM object for the ATM being simulated
      */
-    atm::ATM *mp_atm;
+    atm::ATM *mp_atm=nullptr;;
     /** The one and only instance of this class
      */
-    static Simulation *mp_theInstance;
+    static simulation::Simulation *mp_theInstance=nullptr;
 
 };
 } // namespace simulation
