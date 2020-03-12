@@ -1,6 +1,6 @@
 /**
- * @file Card.h
- * @brief Header file of the Card class
+ * @file Simulation.h
+ * @brief Header file of the Simulation class
  * @author Farid Oubbati
  * @date 08-july-2019
  * @version 1.0
@@ -29,6 +29,18 @@ class Balances;
 namespace atm
 {
 class ATM;
+}
+namespace simulation
+{
+class SimOperatorPanel;
+class SimCardReader;
+class SimDisplay;
+class SimCashDispenser;
+class SimEnvelopeAcceptor;
+class SimReceiptPrinter;
+class SimKeyboard;
+class GUI;
+class SimulatedBank;
 }
 namespace simulation
 {
@@ -62,7 +74,31 @@ public:
      */
     banking::Status* sendMessage(banking::Message *ap_message, banking::Balances *ap_balances);
 
+    /** Notify the ATM that the state of the on-off switch has been changed
+     *
+     *  @param on true if state is now "on", false if it is "off"
+     */
+    void switchChanged(const bool &on);
+    /** Notify ATM that a card has been inserted
+     */
+    void cardInserted();
 
+    /* Possible values for mode parameter to readInput() */
+
+    /** Read input in PIN mode - allow user to enter several characters,
+     *  and to clear the line if the user wishes; echo as asterisks
+     */
+    static const int PIN_MODE = 1;
+
+    /** Read input in amount mode - allow user to enter several characters,
+     *  and to clear the line if the user wishes; echo what use types
+     */
+    static const int AMOUNT_MODE = 2;
+
+    /** Read input in menu choice mode - wait for one digit key to be pressed,
+     *  and return value immediately.
+     */
+    static const int MENU_MODE = 3;
 
 protected:
 
@@ -70,10 +106,45 @@ protected:
 private:
     /** The ATM object for the ATM being simulated
      */
-    atm::ATM *mp_atm;
+    atm::ATM *mp_atm=nullptr;
+    /** The simulated operator panel
+     */
+    SimOperatorPanel *mp_operatorPanel=nullptr;
+
+    /** The simulated card reader
+     */
+    SimCardReader *mp_cardReader=nullptr;
+
+    /** The simulated display
+     */
+    SimDisplay *mp_display=nullptr;
+
+    /** The simulated keyboard
+     */
+    SimKeyboard *mp_keyboard=nullptr;
+
+    /** The simulated cash dispenser
+     */
+    SimCashDispenser *mp_cashDispenser=nullptr;
+
+    /** The simulated envelope acceptor
+     */
+    SimEnvelopeAcceptor *mp_envelopeAcceptor=nullptr;
+
+    /** The simulated receipt printer
+     */
+    SimReceiptPrinter *mp_receiptPrinter=nullptr;
+
+    /** Panel containing the GUI that simulates the ATM
+     */
+    GUI *mp_gui=nullptr;
+
+    /** Simulated bank
+     */
+    SimulatedBank *mp_simulatedBank=nullptr;
     /** The one and only instance of this class
      */
-    static Simulation *mp_theInstance;
+    static Simulation *mp_theInstance=nullptr;
 
 };
 } // namespace simulation
