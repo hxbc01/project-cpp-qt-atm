@@ -96,7 +96,7 @@ protected:
 private:
     /** The ATM object for the ATM being simulated
      */
-    atm::ATM *mp_atm=nullptr;;
+    atm::ATM *mp_atm=nullptr;
     /** The one and only instance of this class
      */
     static simulation::Simulation *mp_theInstance=nullptr;
