@@ -7,7 +7,7 @@
  */
 #ifndef LOGPANEL_H
 #define LOGPANEL_H
-/** Representation for customer's ATM card
+/** The GUI panel that displays the ATM's internal log
  */
 namespace simulation
 {
