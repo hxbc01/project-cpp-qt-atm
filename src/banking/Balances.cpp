@@ -12,21 +12,21 @@ banking::Balances::~Balances()
 
 }
 
-void banking::Balances::setBalances(Money a_total, Money a_available)
+void banking::Balances::setBalances(Money *ap_total, Money *ap_available)
 {
-    m_total = a_total;
-    m_available = a_available;
+    mp_total = ap_total;
+    mp_available = ap_available;
 }
 
 
-banking::Money banking::Balances::getTotal() const
+banking::Money* banking::Balances::getTotal() const
 {
-    return m_total;
+    return mp_total;
 }
 
-banking::Money banking::Balances::getAvailable() const
+banking::Money* banking::Balances::getAvailable() const
 {
-    return m_available;
+    return mp_available;
 }
 
 
