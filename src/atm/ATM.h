@@ -76,62 +76,62 @@ public:
      *
      *  @return unique id of this ATM
      */
-    int getID();
+    int getID() const;
     /** Accessor for place
      *
      *  @return physical location of this ATM
      */
-    QString getPlace();
+    QString getPlace() const;
     /** Accessor for bank name
      *
      *  @return name of bank owning this ATM
      */
-    QString getBankName();
+    QString getBankName() const;
     /** Accessor for bank address
      *
      *  @return address of bank owning this ATM
      */
-    QString getBankAddress();
+    QString getBankAddress() const;
     /** Accessor for card reader
      *
      *  @return card reader component of this ATM
      */
-    atm::physical::CardReader* getCardReader();
+    atm::physical::CardReader* getCardReader() const;
     /** Accessor for cash dispenser
        *
        *  @return cash dispenser component of this ATM
        */
-    atm::physical::CashDispenser* getCashDispenser();
+    atm::physical::CashDispenser* getCashDispenser() const;
     /** Accessor for customer console
      *
      *  @return customer console component of this ATM
      */
-    atm::physical::CustomerConsole* getCustomerConsole();
+    atm::physical::CustomerConsole* getCustomerConsole() const;
     /** Accessor for envelope acceptor
      *
      *  @return envelope acceptor component of this ATM
      */
-    atm::physical::EnvelopeAcceptor* getEnvelopeAcceptor();
+    atm::physical::EnvelopeAcceptor* getEnvelopeAcceptor() const;
     /** Accessor for log
      *
      *  @return log component of this ATM
      */
-    atm::physical::Log* getLog();
+    atm::physical::Log* getLog() const;
     /** Accessor for network to bank
      *
      *  @return network connection to bank of this ATM
      */
-    atm::physical::NetworkToBank* getNetworkToBank();
+    atm::physical::NetworkToBank* getNetworkToBank() const;
     /** Accessor for operator panel
      *
      *  @return operator panel component of this ATM
      */
-    atm::physical::OperatorPanel* getOperatorPanel();
+    atm::physical::OperatorPanel* getOperatorPanel() const;
     /** Accessor for receipt printer
      *
      *  @return receipt printer component of this ATM
      */
-    atm::physical::ReceiptPrinter* getReceiptPrinter();
+    atm::physical::ReceiptPrinter* getReceiptPrinter() const;
 
 
 

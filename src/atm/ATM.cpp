@@ -164,62 +164,62 @@ void atm::ATM::performShutdown()
 
 }
 
-int atm::ATM::getID()
+int atm::ATM::getID() const
 {
     return m_id;
 }
 
-QString atm::ATM::getPlace()
+QString atm::ATM::getPlace() const
 {
     return m_place;
 }
 
-QString atm::ATM::getBankName()
+QString atm::ATM::getBankName() const
 {
     return m_bankName;
 }
 
-QString atm::ATM::getBankAddress()
+QString atm::ATM::getBankAddress() const
 {
     return m_bankAddress;
 }
 
-atm::physical::CardReader* atm::ATM::getCardReader()
+atm::physical::CardReader* atm::ATM::getCardReader() const
 {
     return mp_cardReader;
 }
 
-atm::physical::CashDispenser* atm::ATM::getCashDispenser()
+atm::physical::CashDispenser* atm::ATM::getCashDispenser() const
 {
     return mp_cashDispenser;
 }
 
-atm::physical::CustomerConsole* atm::ATM::getCustomerConsole()
+atm::physical::CustomerConsole* atm::ATM::getCustomerConsole() const
 {
     return mp_customerConsole;
 }
 
-atm::physical::EnvelopeAcceptor* atm::ATM::getEnvelopeAcceptor()
+atm::physical::EnvelopeAcceptor* atm::ATM::getEnvelopeAcceptor() const
 {
     return mp_envelopeAcceptor;
 }
 
-atm::physical::Log* atm::ATM::getLog()
+atm::physical::Log* atm::ATM::getLog() const
 {
     return mp_log;
 }
 
-atm::physical::NetworkToBank* atm::ATM::getNetworkToBank()
+atm::physical::NetworkToBank* atm::ATM::getNetworkToBank() const
 {
     return mp_networkToBank;
 }
 
-atm::physical::OperatorPanel* atm::ATM::getOperatorPanel()
+atm::physical::OperatorPanel* atm::ATM::getOperatorPanel() const
 {
     return mp_operatorPanel;
 }
 
-atm::physical::ReceiptPrinter* atm::ATM::getReceiptPrinter()
+atm::physical::ReceiptPrinter* atm::ATM::getReceiptPrinter() const
 {
     return mp_receiptPrinter;
 }
