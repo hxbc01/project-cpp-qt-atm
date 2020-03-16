@@ -8,16 +8,30 @@
 #ifndef RECEIPT_H
 #define RECEIPT_H
 #include <QStringList>
+#include <QString>
 #include <QDateTime>
-#include "Balances.h"
-#include "Transaction.h"
-#include "Card.h"
-#include "ATM.h"
+
 /** Abstract base class for representation of a receipt to be printed.  Each
  *  specific type of transaction creates an instance of a concrete subclass
  *  of this class.
  */
+namespace banking
+{
+class Balances;
+class Card;
 
+}
+namespace atm
+{
+namespace transaction
+{
+class Transaction;
+}
+}
+namespace atm
+{
+class ATM;
+}
 namespace banking
 {
 class Receipt
@@ -34,28 +48,42 @@ class Receipt
      *  @param transaction the Transaction object for the transaction
      *  @param balances Balances object giving final balances for account used
      */
-    Receipt(ATM a_atm, Card a_card, Transaction a_transaction, Balances a_balances, QDateTime a_currentDate);
+    Receipt(atm::ATM *ap_atm, Card *ap_card, atm::transaction::Transaction *ap_transaction, Balances *ap_balances , QStringList a_detailsPortion, QDateTime a_currentDate);
     /** Destructor
      */
     ~Receipt();
+    /** Get the individual lines of the Receipt to be printed.
+     */
+    QString getNextLine();
+    /** Check the Receipt for more lines
+     */
+    bool hasMoreLines();
 public:
 
 
 protected:
 
+
+
+private:
+
+    /** Heading portion of the receipt - common to all forms of transactions
+     */
+    QStringList m_headingPortion;
     /** Transaction details portion of the receipt - specific to each type of
      *  transaction, and therefore filled in by subclasses
      */
     QStringList m_detailsPortion;
-
-private:
-
-    /** Heading portion of the receipt - common to all forms of receipt
-     */
-    QStringList m_headingPortion;
-    /** Ending balances portion of the receipt - common to all forms of receipt
+    /** Ending balances portion of the receipt - common to all forms of transactions
      */
     QStringList m_balancesPortion;
+    /** all portions of the receipt
+     */
+    QStringList m_AllReceiptPortions;
+    /** iterator for the receipt QStringList
+     */
+    QStringList::Iterator m_it =m_AllReceiptPortions.begin();
+
 };
 }
 
