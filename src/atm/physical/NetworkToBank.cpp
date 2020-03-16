@@ -31,11 +31,11 @@ void atm::physical::NetworkToBank::closeConnection()
 
 banking::Status* atm::physical::NetworkToBank::sendMessage(banking::Message *ap_message, banking::Balances *ap_balances)
 {
-            // Log sending of the message
-            mp_log->logSend(ap_message);
-            //*******************++++++++++++
-            // Simulate the sending of the message - here is where the real code
-            // to actually send the message over the network would go
-            //*******************++++++++++++
-            mp_log->logResponse();
+//            // Log sending of the message
+//            mp_log->logSend(ap_message);
+//            //*******************++++++++++++
+//            // Simulate the sending of the message - here is where the real code
+//            // to actually send the message over the network would go
+//            //*******************++++++++++++
+//            mp_log->logResponse();
 }
