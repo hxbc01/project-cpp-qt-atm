@@ -26,10 +26,10 @@ public:
     ~AccountInformation();
     /** Names for accounts to be offered in menu to customer
      */
-    const QStringList ACCOUNT_NAMES = {"Checking", "Savings", "Money Market"};
+    static const  QStringList ACCOUNT_NAMES;
     /** Abbreviations for account names to be printed on receipts.
       */
-    const QStringList ACCOUNT_ABBREVIATIONS = {"CHKG", "SVGS", "MMKT"};
+    static const  QStringList ACCOUNT_ABBREVIATIONS;
 
 protected:
 
