@@ -85,7 +85,7 @@ public:
      *
      *  @return serial number
      */
-    int getSerialNumber();
+    int getSerialNumber() const;
 
     /** Get specifics for the transaction from the customer - each
      *  subclass must implement this appropriately.
@@ -153,12 +153,12 @@ protected:
 private:
     /** List of available transaction types to display as a menu
      */
-    static const QStringList TRANSACTION_TYPES_MENU = {"Withdrawal", "Deposit", "Transfer", "Balance Inquiry"};
+    static const QStringList TRANSACTION_TYPES_MENU;
 
     /** Next serial number - used to assign a unique serial number to
      *  each transaction
      */
-    static int m_nextSerialNumber = 1;
+    static int m_nextSerialNumber;
 
     /** The current state of the transaction
      */

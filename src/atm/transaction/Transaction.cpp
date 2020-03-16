@@ -1,7 +1,8 @@
 #include <QDebug>
 #include "Transaction.h"
 #include "Balances.h"
-
+const QStringList atm::transaction::Transaction::TRANSACTION_TYPES_MENU = {"Withdrawal", "Deposit", "Transfer", "Balance Inquiry"};
+int atm::transaction::Transaction::m_nextSerialNumber = 1;
 atm::transaction::Transaction::Transaction()
 {
 
@@ -29,32 +30,37 @@ atm::transaction::Transaction::~Transaction()
 
 atm::transaction::Transaction* atm::transaction::Transaction::makeTransaction(ATM *ap_atm, Session *ap_session, banking::Card *ap_card, int a_pin)
 {
-    int choice = mp_atm-> .getCustomerConsole().readMenuChoice(
-                "Please choose transaction type", TRANSACTION_TYPES_MENU);
+//    int choice = mp_atm-> .getCustomerConsole().readMenuChoice(
+//                "Please choose transaction type", TRANSACTION_TYPES_MENU);
 
-        switch(choice)
-        {
-            case 0:
+//        switch(choice)
+//        {
+//            case 0:
 
-                return new Withdrawal(atm, session, card, pin);
+//                return new Withdrawal(atm, session, card, pin);
 
-            case 1:
+//            case 1:
 
-                return new Deposit(atm, session, card, pin);
+//                return new Deposit(atm, session, card, pin);
 
-            case 2:
+//            case 2:
 
-                return new Transfer(atm, session, card, pin);
+//                return new Transfer(atm, session, card, pin);
 
-            case 3:
+//            case 3:
 
-                return new Inquiry(atm, session, card, pin);
+//                return new Inquiry(atm, session, card, pin);
 
-            default:
+//            default:
 
-                return null;    // To keep compiler happy - should not happen!
-        }
+//                return null;    // To keep compiler happy - should not happen!
+//        }
 
 
 }
 
+int atm::transaction::Transaction::getSerialNumber() const
+{
+    return m_serialNumber;
+
+}
