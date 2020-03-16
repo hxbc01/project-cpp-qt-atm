@@ -7,13 +7,19 @@
  */
 #ifndef TRANSFER_H
 #define TRANSFER_H
+#include "Transaction.h"
 /** Representation for a transfer transaction
  */
+namespace atm
+{
 class ATM;
 class Session;
+}
+namespace banking
+{
 class Card;
 class Money;
-
+}
 namespace atm
 {
 namespace transaction
@@ -32,7 +38,7 @@ public:
      *  @param card the customer's card
      *  @param pin the PIN entered by the customer
      */
-    Transfer(ATM *ap_atm, Session *ap_session, Card *ap_card, int a_pin);
+    Transfer(ATM *ap_atm, Session *ap_session, banking::Card *ap_card, int a_pin);
 
     /** Destructor
      */
@@ -63,7 +69,7 @@ private:
 
     /** Amount of money to transfer
      */
-    Money m_amount;
+    banking::Money *mp_amount=nullptr;
 
 };
 }
