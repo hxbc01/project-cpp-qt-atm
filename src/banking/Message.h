@@ -8,8 +8,6 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 #include <QString>
-#include "Card.h"
-#include "Money.h"
 
 
 /** Representations of a message from the ATM to the bank.
@@ -18,6 +16,11 @@
  *  one or more subclasses using the slots that it needs, and supplying appropriate
  *  "not needed" values for the rest.
  */
+namespace banking
+{
+class Card;
+class Money;
+}
 namespace banking
 {
 class Message
@@ -42,9 +45,9 @@ public:
      *  @param amount the amount of the transaction - can be null if the particular
      *         type of transaction does not have an amount (e.g. an inquiry)
      */
-    explicit Message(int a_messageCode, Card a_card, int a_pin,
+    explicit Message(int a_messageCode, Card *ap_card, int a_pin,
                      int a_serialNumber, int a_fromAccount,
-                     int a_toAccount, Money a_amount);
+                     int a_toAccount, Money *ap_amount);
 
     /** Destructor
      */
@@ -69,7 +72,7 @@ public:
      *
      *  @return the customer's card
      */
-    Card getCard() const;
+    Card* getCard() const;
     /** Accessor for PIN
      *
      *  @return the PIN entered by the customer
@@ -94,7 +97,7 @@ public:
       *
       *  @return the transaction amount
       */
-    Money getAmount() const;
+    Money* getAmount() const;
 
     // Possible values for messageCode
 
@@ -124,7 +127,7 @@ private:
 
     /** The customer's card
      */
-    Card m_card;
+    Card *mp_card=nullptr;
 
     /** PIN entered by customer
      */
@@ -144,7 +147,7 @@ private:
 
     /** Transaction amount specified by customer - if needed (else $0.00)
      */
-    Money m_amount;
+    Money *mp_amount=nullptr;
 
 };
 }

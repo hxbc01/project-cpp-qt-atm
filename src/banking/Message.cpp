@@ -1,21 +1,23 @@
 #include "Message.h"
+#include "Card.h"
+#include "Money.h"
 
 banking::Message::Message()
 {
 
 }
 
-banking::Message::Message(int a_messageCode, Card a_card, int a_pin,
+banking::Message::Message(int a_messageCode, Card *ap_card, int a_pin,
                           int a_serialNumber, int a_fromAccount,
-                          int a_toAccount, Money a_amount)
+                          int a_toAccount, Money *ap_amount)
 {
     m_messageCode = a_messageCode;
-    m_card = a_card;
+    mp_card = ap_card;
     m_pin = a_pin;
     m_serialNumber = a_serialNumber;
     m_fromAccount = a_fromAccount;
     m_toAccount = a_toAccount;
-    m_amount = a_amount;
+    mp_amount = ap_amount;
 
 }
 
@@ -34,9 +36,9 @@ int banking::Message::getMessageCode()
     return m_messageCode;
 }
 
-banking::Card banking::Message::getCard() const
+banking::Card* banking::Message::getCard() const
 {
-    return m_card;
+    return mp_card;
 }
 
 int banking::Message::getPIN() const
@@ -59,9 +61,9 @@ int banking::Message::getToAccount() const
     return m_toAccount;
 }
 
-banking::Money banking::Message::getAmount() const
+banking::Money* banking::Message::getAmount() const
 {
-    return m_amount;
+    return mp_amount;
 }
 
 
@@ -96,7 +98,7 @@ QString banking::Message::toString()
             break;
     }
 
-    result += " CARD# " + QString::number(m_card.getNumber());
+    result += " CARD# " + QString::number(mp_card->getNumber());
     result += " TRANS# " + QString::number(m_serialNumber);
     if (m_fromAccount >= 0)
         result += " FROM  " + QString::number(m_fromAccount);
@@ -106,8 +108,8 @@ QString banking::Message::toString()
         result += " TO  " + QString::number(m_toAccount);
     else
         result += " NO TO";
-    if (! m_amount.lessEqual(Money(0)))
-        result += " " + m_amount.toString();
+    if (! mp_amount->lessEqual(new Money(0)))
+        result += " " + mp_amount->toString();
     else
         result += " NO AMOUNT";
 
