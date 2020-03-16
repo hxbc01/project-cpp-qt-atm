@@ -1,6 +1,6 @@
 /**
- * @file Card.h
- * @brief Header file of the Card class
+ * @file SimulatedBank.h
+ * @brief Header file of the SimulatedBank class
  * @author Farid Oubbati
  * @date 08-july-2019
  * @version 1.0
