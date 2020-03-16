@@ -7,12 +7,20 @@
  */
 #ifndef DEPOSIT_H
 #define DEPOSIT_H
+#include "Transaction.h"
 /** Representation for a deposit transaction
  */
+namespace atm
+{
 class ATM;
 class Session;
+}
+namespace banking
+{
 class Card;
 class Money;
+class Message;
+}
 
 namespace atm
 {
@@ -32,18 +40,18 @@ public:
      *  @param card the customer's card
      *  @param pin the PIN entered by the customer
      */
-    Deposit(ATM *ap_atm, Session *ap_session, Card *ap_card, int a_pin);
+    Deposit(ATM *ap_atm, Session *ap_session, banking::Card *ap_card, int a_pin);
 
     /** Destructor
      */
     ~Deposit();
-    /** Get specifics for the transaction from the customer
+    /** Get the transaction choice from the customer
      *
      *  @return message to bank for initiating this transaction
      *  @exception CustomerConsole.Cancelled if customer cancelled this transaction
      */
 
-    //->Message getSpecificsFromCustomer() throws CustomerConsole.Cancelled
+    banking::Message* getTransactionChoice(); //throws CustomerConsole.Cancelled
 
     /** Complete an approved transaction
      *
@@ -62,7 +70,7 @@ private:
 
     /** Amount of money to deposit
      */
-    Money amount;
+    banking::Money *mp_amount=nullptr;
 
 };
 }
