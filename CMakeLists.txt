@@ -24,6 +24,7 @@ include_directories(./include
     ./src/atm/transaction
     ./src/banking
     ./src/simulation
+    ./src/utils
 )
 
 add_subdirectory(./src/banking)
@@ -33,7 +34,7 @@ add_subdirectory(./src/atm)
 add_subdirectory(./src/simulation)
 add_subdirectory(./src/utils)
 
-set (INTERN_LINK_LIBS ${INTERN_LINK_LIBS} banking physical atm transaction simulation utils)
+set (INTERN_LINK_LIBS ${INTERN_LINK_LIBS} atm banking physical transaction simulation utils)
 set (EXTERN_LINK_LIBS ${EXTERN_LINK_LIBS} Qt5::Widgets)
 
 # target
