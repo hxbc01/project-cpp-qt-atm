@@ -64,7 +64,7 @@ public:
      *
      *  @return the instance of this class
      */
-    static Simulation* getInstance();
+    Simulation* getInstance();
     /** Simulate sending a message to bank
      *
      *  @param message the message to send
@@ -82,6 +82,11 @@ public:
     /** Notify ATM that a card has been inserted
      */
     void cardInserted();
+    /** Accessor for GUI Panel that simulates the ATM
+     *
+     *  @return the GUI Panel
+     */
+    GUI* getGUI();
 
     /* Possible values for mode parameter to readInput() */
 
@@ -144,7 +149,7 @@ private:
     SimulatedBank *mp_simulatedBank=nullptr;
     /** The one and only instance of this class
      */
-    static Simulation *mp_theInstance=nullptr;
+    Simulation *mp_theInstance=nullptr;
 
 };
 } // namespace simulation
