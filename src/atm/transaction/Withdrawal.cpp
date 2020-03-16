@@ -5,7 +5,7 @@ atm::transaction::Withdrawal::Withdrawal()
 {
 
 }
-atm::transaction::Withdrawal::Withdrawal(ATM *ap_atm, Session *ap_session, Card *ap_card, int a_pin)
+atm::transaction::Withdrawal::Withdrawal(ATM *ap_atm, Session *ap_session, banking::Card *ap_card, int a_pin)
 {
 
 }

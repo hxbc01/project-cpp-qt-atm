@@ -7,13 +7,19 @@
  */
 #ifndef WITHDRAWAL_H
 #define WITHDRAWAL_H
+#include "Transaction.h"
 /** Representation for a cash withdrawal transaction
  */
+namespace atm
+{
 class ATM;
 class Session;
+}
+namespace banking
+{
 class Card;
 class Money;
-
+}
 namespace atm
 {
 namespace transaction
@@ -32,7 +38,7 @@ public:
      *  @param card the customer's card
      *  @param pin the PIN entered by the customer
      */
-    Withdrawal(ATM *ap_atm, Session *ap_session, Card *ap_card, int a_pin);
+    Withdrawal(ATM *ap_atm, Session *ap_session, banking::Card *ap_card, int a_pin);
 
     /** Destructor
      */
@@ -59,7 +65,7 @@ private:
 
     /** Amount of money to withdraw
      */
-    Money m_amount;
+    banking::Money *mp_amount=nullptr;
 
 };
 }
