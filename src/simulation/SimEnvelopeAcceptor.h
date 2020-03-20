@@ -7,17 +7,18 @@
  */
 #ifndef SIMENVELOPEACCEPTOR_H
 #define SIMENVELOPEACCEPTOR_H
-/** Representation for customer's ATM card
+#include <QPushButton>
+/** Simulate the envelope acceptor
  */
 namespace simulation
 {
-class SimEnvelopeAcceptor
+class SimEnvelopeAcceptor : public QPushButton
 {
 
 public:
     /** Default Constructor
      */
-    SimEnvelopeAcceptor();
+    explicit SimEnvelopeAcceptor(const QString &text);
 
     /** Destructor
      */

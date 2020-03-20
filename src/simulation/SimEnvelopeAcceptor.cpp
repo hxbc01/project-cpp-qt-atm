@@ -1,7 +1,7 @@
 #include <QDebug>
 #include "SimEnvelopeAcceptor.h"
 
-simulation::SimEnvelopeAcceptor::SimEnvelopeAcceptor()
+simulation::SimEnvelopeAcceptor::SimEnvelopeAcceptor(const QString &text) : QPushButton(text)
 {
 
 }
