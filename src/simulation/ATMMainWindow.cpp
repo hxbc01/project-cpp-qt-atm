@@ -15,9 +15,7 @@ ATMMainWindow::ATMMainWindow(simulation::Simulation *ap_theSimulation)
     setWindowTitle(tr("ATM Simulation"));
 
 
-    mp_mainWidget = new QWidget;
-    mp_mainWidget->setStyleSheet("background-color:Grey;");
-    setCentralWidget(ap_theSimulation->getGUI());
+    ap_theSimulation->getGUI()->setStyleSheet("background-color:Grey;");
     // creat the file menu in menu bar
     // define menu action
     mp_exitAction = new QAction(tr("E&xit"),this);
@@ -25,28 +23,30 @@ ATMMainWindow::ATMMainWindow(simulation::Simulation *ap_theSimulation)
     mp_exitAction->setStatusTip(tr("Exit the application"));
 
     // add menu bar
+    mp_menuBar = new QMenuBar();
     // add a file menu
-    mp_fileMenu = menuBar()->addMenu(tr("&File"));
+    mp_fileMenu = new QMenu(tr("&File"));
+    mp_menuBar->addMenu(mp_fileMenu);
     // define action icon
     const QIcon l_exitIcon = QIcon::fromTheme("application-exit");
     // add action to file menu
     mp_fileMenu->addAction(l_exitIcon, tr("E&xit"), this, &QWidget::close);
 
     // create a the GUI layout
-    //mp_mainLayout = new QGridLayout(this);
-    // place display on the layout
+    mp_mainVLayout = new QVBoxLayout();
+    // set menu Bar
+    mp_mainVLayout->setMenuBar(mp_menuBar);
+    // add ATM GUI
+    mp_mainVLayout->addWidget(ap_theSimulation->getGUI());
+    //mp_mainVLayout->setAlignment(ap_theSimulation->getGUI(),Qt::AlignCenter);
+    // set layout to current widget
+    setLayout(mp_mainVLayout);
 
-    //addWidget(nullptr, 0, 0, 1, 6);
-
-
-    // build the ATM GUI window
 
 }
 
 ATMMainWindow::~ATMMainWindow()
 {
-    delete mp_mainLayout;
-    mp_mainLayout = nullptr;
 
     delete mp_exitAction;
     mp_exitAction = nullptr;
