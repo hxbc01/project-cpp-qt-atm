@@ -7,17 +7,18 @@
  */
 #ifndef SIMRECEIPTPRINTER_H
 #define SIMRECEIPTPRINTER_H
-/** Representation for customer's ATM card
+#include <QPushButton>
+/** Simulate the receipt printer
  */
 namespace simulation
 {
-class SimReceiptPrinter
+class SimReceiptPrinter : public QPushButton
 {
 
 public:
     /** Default Constructor
      */
-    SimReceiptPrinter();
+    explicit SimReceiptPrinter(const QString &text);
     /** Destructor
      */
     ~SimReceiptPrinter();

@@ -1,7 +1,7 @@
 #include <QDebug>
 #include "SimReceiptPrinter.h"
 
-simulation::SimReceiptPrinter::SimReceiptPrinter()
+simulation::SimReceiptPrinter::SimReceiptPrinter(const QString &text) : QPushButton(text)
 {
 
 }
