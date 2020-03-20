@@ -7,17 +7,24 @@
  */
 #ifndef SIMCARDREADER_H
 #define SIMCARDREADER_H
-/** Representation for customer's ATM card
+#include <QPushButton>
+/** Simulate the card reader
  */
 namespace simulation
 {
-class SimCardReader
+class Simulation;
+}
+namespace simulation
+{
+class SimCardReader : public QPushButton
 {
 
 public:
-    /** Default Constructor
+    /** Constructor
+     *
+     *  @param simulation the Simulation object
      */
-    SimCardReader();
+    explicit SimCardReader(const QString &text, Simulation *ap_theSimulation);
     /** Destructor
      */
     ~SimCardReader();
