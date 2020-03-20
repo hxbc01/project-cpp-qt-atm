@@ -7,17 +7,27 @@
  */
 #ifndef SIMKEYBOARD_H
 #define SIMKEYBOARD_H
-/** Representation for customer's ATM card
+#include <QWidget>
+/** Simulate the keyboard portion of the customer console
  */
+QT_BEGIN_NAMESPACE
+class QGridLayout;
+class QPushButton;
+QT_END_NAMESPACE
 namespace simulation
 {
-class SimKeyboard
+class SimDisplay;
+class SimEnvelopeAcceptor;
+}
+namespace simulation
+{
+class SimKeyboard : public QWidget
 {
 
 public:
     /** Default Constructor
      */
-    SimKeyboard();
+    SimKeyboard(SimDisplay *ap_display, SimEnvelopeAcceptor *ap_envelopeAcceptor);
     /** Destructor
      */
     ~SimKeyboard();
@@ -26,6 +36,19 @@ protected:
 
 
 private:
+    // grid layout for the keyboard
+    QGridLayout *mp_keyboardGridLayout=nullptr;
+    // number of buttons
+    enum { m_buttons = 16};
+    // left buttons array
+    QPushButton *mp_button[m_buttons];
+    // left buttons labels
+    QStringList m_buttonsLabels = {"1", "2", "3","CANCEL", "4", "5", "6", "CLEAR","7", "8", "9", "ENTER", "", "0", "", ""};
+    // right buttons array
+    //QPushButton *mp_operationButtons[m_operationButtons];
+    // left buttons labels
+    //QStringList m_operationLabels = {"CANCEL", "CLEAR", "ENTER", ""};
+
 
 };
 }
