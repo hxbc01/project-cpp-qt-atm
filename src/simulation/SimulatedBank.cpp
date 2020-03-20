@@ -1,40 +1,44 @@
 #include <QDebug>
 #include <thread>
-#include "Simulation.h"
+#include "SimulatedBank.h"
 
-simulation::Simulation::Simulation()
-{
-
-}
-simulation::Simulation::Simulation(atm::ATM *ap_atm)
-{
-    mp_atm = ap_atm;
-    mp_theInstance = this;
-
-}
-
-simulation::Simulation::~Simulation()
+simulation::SimulatedBank::SimulatedBank()
 {
 
 }
 
-simulation::Simulation* simulation::Simulation::getInstance()
+
+simulation::SimulatedBank::~SimulatedBank()
 {
-    return mp_theInstance;
+
 }
 
-banking::Status* simulation::Simulation::sendMessage(banking::Message *ap_message, banking::Balances *ap_balances)
+banking::Status* simulation::SimulatedBank::handleMessage(banking::Message *ap_message, banking::Balances *ap_balances)
 {
-    // Simulate time taken to send message over network
 
-    try{
-        std::this_thread::sleep_for(std::chrono::seconds(2));
-    }
-    catch(std::exception const& e){
-        qDebug()<< e.what();
-    }
 }
 
+banking::Status* simulation::SimulatedBank::withdrawal(banking::Message *ap_message, banking::Balances *ap_balances)
+{
 
+}
 
+banking::Status* simulation::SimulatedBank::initiateDeposit(banking::Message *ap_message)
+{
 
+}
+
+banking::Status* simulation::SimulatedBank::completeDeposit(banking::Message *ap_message, banking::Balances *ap_balances)
+{
+
+}
+
+banking::Status* simulation::SimulatedBank::transfer(banking::Message *ap_message, banking::Balances *ap_balances)
+{
+
+}
+
+banking::Status* simulation::SimulatedBank::inquiry(banking::Message *ap_message, banking::Balances *ap_balances)
+{
+
+}

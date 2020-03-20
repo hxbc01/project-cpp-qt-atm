@@ -42,7 +42,7 @@ public:
      *         by bank
      *  @return status code returned by bank
      */
-    banking::Status handleMessage(banking::Message *ap_message, banking::Balances *ap_balances);
+    banking::Status* handleMessage(banking::Message *ap_message, banking::Balances *ap_balances);
     /** Simulate sending a message to bank
      *
      *  @param message the message to send
@@ -65,28 +65,28 @@ public:
      *  @param message the message describing the deposit requested
      *  @return status code derived from current values
      */
-    banking::Status initiateDeposit(banking::Message *ap_message);
+    banking::Status* initiateDeposit(banking::Message *ap_message);
     /** Simulate completion of a deposit
       *
       *  @param message the message describing the deposit requested
       *  @param balances (out) balances (not updated until completed)
       *  @return status code - must always be success in this case
       */
-     banking::Status completeDeposit(banking::Message *ap_message, banking::Balances *ap_balances);
+     banking::Status* completeDeposit(banking::Message *ap_message, banking::Balances *ap_balances);
      /** Simulate processing of a transfer
       *
       *  @param message the message describing the transfer requested
       *  @param balances (out) balances in "to" account after transfer
       *  @return status code derived from current values
       */
-     banking::Status transfer(banking::Message *ap_message, banking::Balances *ap_balances);
+     banking::Status* transfer(banking::Message *ap_message, banking::Balances *ap_balances);
      /** Simulate processing of an inquiry
       *
       *  @param message the message describing the inquiry requested
       *  @param balances (out) balances in account
       *  @return status code derived from current values
       */
-     banking::Status inquiry(banking::Message *ap_message, banking::Balances *ap_balances);
+     banking::Status* inquiry(banking::Message *ap_message, banking::Balances *ap_balances);
 
 
 
@@ -94,12 +94,7 @@ protected:
 
 
 private:
-    /** The ATM object for the ATM being simulated
-     */
-    atm::ATM *mp_atm=nullptr;
-    /** The one and only instance of this class
-     */
-    static simulation::Simulation *mp_theInstance=nullptr;
+
 
 };
 } // namespace simulation
