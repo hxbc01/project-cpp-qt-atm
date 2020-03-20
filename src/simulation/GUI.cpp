@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <QStackedWidget>
+#include <QVBoxLayout>
 #include "GUI.h"
 #include "ATMPanel.h"
 #include "SimOperatorPanel.h"
@@ -33,7 +34,14 @@ simulation::GUI::GUI(SimOperatorPanel *ap_operatorPanel,
                                ap_cashDispenser,
                                ap_envelopeAcceptor,
                                ap_receiptPrinter);
+    // create a the GUI layout
+    mp_GUIVLayout = new QVBoxLayout(this);
     mp_atmGUI->addWidget(mp_atmPanel);
+    mp_GUIVLayout->addWidget(mp_atmGUI);
+    mp_GUIVLayout->setAlignment(mp_atmGUI,Qt::AlignCenter);
+
+    // Set layout to current Widget
+    setLayout(mp_GUIVLayout);
 }
 
 

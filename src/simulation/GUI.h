@@ -13,6 +13,7 @@
 QT_BEGIN_NAMESPACE
 class QStackedWidget;
 class QLabel;
+class QVBoxLayout;
 QT_END_NAMESPACE
 namespace simulation
 {
@@ -64,6 +65,9 @@ private:
     /** The overall GUI of the ATM
      */
     QStackedWidget *mp_atmGUI=nullptr;
+    /** layout for the stacked GUI Windows
+     */
+    QVBoxLayout *mp_GUIVLayout =nullptr;
 
 };
 }
