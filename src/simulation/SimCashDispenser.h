@@ -7,17 +7,18 @@
  */
 #ifndef SIMCASHDISPENSER_H
 #define SIMCASHDISPENSER_H
-/** Representation for customer's ATM card
+#include <QPushButton>
+/** Simulate the cash dispenser
  */
 namespace simulation
 {
-class SimCashDispenser
+class SimCashDispenser : public QPushButton
 {
 
 public:
     /** Default Constructor
      */
-    SimCashDispenser();
+    explicit SimCashDispenser(const QString &text);
 
     /** Destructor
      */
