@@ -4,13 +4,12 @@
 #include "ATM.h"
 #include "GUI.h"
 #include "SimOperatorPanel.h"
-//#include "SimCardReader.h"
-//#include "SimDisplay.h"
-//#include "SimCashDispenser.h"
-//#include "SimEnvelopeAcceptor.h"
-//#include "SimReceiptPrinter.h"
-//#include "SimKeyboard.h"
-//#include "GUI.h"
+#include "SimCardReader.h"
+#include "SimDisplay.h"
+#include "SimCashDispenser.h"
+#include "SimEnvelopeAcceptor.h"
+#include "SimReceiptPrinter.h"
+#include "SimKeyboard.h"
 //#include "SimulatedBank.h"
 
 simulation::Simulation::Simulation()
@@ -23,12 +22,12 @@ simulation::Simulation::Simulation(atm::ATM *ap_atm)
 
     // Create the simulated individual components of the ATM's GUI
     mp_operatorPanel = new SimOperatorPanel(this);
-//    mp_cardReader = new SimCardReader(this);
-//    mp_display = new SimDisplay();
-//    mp_cashDispenser = new SimCashDispenser();
-//    mp_envelopeAcceptor = new SimEnvelopeAcceptor();
-//    mp_receiptPrinter = new SimReceiptPrinter();
-//    mp_keyboard = new SimKeyboard(display, envelopeAcceptor);
+    mp_cardReader = new SimCardReader("Card Reader", this);
+    mp_display = new SimDisplay();
+    mp_cashDispenser = new SimCashDispenser("Cash Dispenser");
+    mp_envelopeAcceptor = new SimEnvelopeAcceptor("Envelope Acceptor");
+    mp_receiptPrinter = new SimReceiptPrinter("Receipt Printer");
+    mp_keyboard = new SimKeyboard(mp_display, mp_envelopeAcceptor);
 
 //    // Create the GUI containing the above
 
