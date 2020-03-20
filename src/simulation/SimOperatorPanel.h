@@ -14,6 +14,7 @@ QT_BEGIN_NAMESPACE
 class QLabel;
 class QVBoxLayout;
 class QPushButton;
+class QHBoxLayout;
 QT_END_NAMESPACE
 
 namespace simulation
@@ -47,15 +48,20 @@ public:
 
 
 protected:
+
+
+
+private:
     // Label On/Off Info
     QLabel *mp_infoLabel=nullptr;
     // Button On/Off
     QPushButton *mp_buttonONOFF=nullptr;
-    // Layout for the operator panel
-    QVBoxLayout *mp_operatorLayout=nullptr;
-
-
-private:
+    // button for showing the log
+    QPushButton *mp_showLogButton =nullptr;
+    // vertical layout for the On/Off button
+    QVBoxLayout *mp_buttonONOFFVLayout=nullptr;
+    // vertical layout for the operator panel
+    QHBoxLayout *mp_operatorHLayout=nullptr;
 
 
 };
