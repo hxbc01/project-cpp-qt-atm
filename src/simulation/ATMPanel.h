@@ -14,6 +14,8 @@
 QT_BEGIN_NAMESPACE
 class QVBoxLayout;
 class QLabel;
+class QHBoxLayout;
+class QPushButton;
 QT_END_NAMESPACE
 
 namespace simulation
@@ -64,9 +66,15 @@ protected:
 
 private:
     // main layout for the ATM GUI Window
-    QVBoxLayout *mp_ATMLayout =nullptr;
+    QVBoxLayout *mp_ATMVLayout =nullptr;
     // Top label for the ATM GUI Window
     QLabel *mp_ATMLabel =nullptr;
+    // horizontal layout for the card reader and envelope acceptor
+    QHBoxLayout *mp_CEHLayout =nullptr;
+    // horizontal layout for the keyboard, cash dispenser and receipt printer
+    QHBoxLayout *mp_KCRHLayout =nullptr;
+    // vertical layout for the cash dispenser and receipt printer
+    QVBoxLayout *mp_CRHLayout =nullptr;
 
 
 };
