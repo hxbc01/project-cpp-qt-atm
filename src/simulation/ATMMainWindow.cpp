@@ -8,14 +8,15 @@
 #include <QLineEdit>
 #include <QPalette>
 
-ATMMainWindow::ATMMainWindow(simulation::Simulation *ap_theSimulation)
+ATMMainWindow::ATMMainWindow(simulation::Simulation *ap_simulation)
 {
-
+    // get pointer to simulation object
+    mp_simulation = ap_simulation;
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     setWindowTitle(tr("ATM Simulation"));
 
 
-    ap_theSimulation->getGUI()->setStyleSheet("background-color:Grey;");
+    mp_simulation->getGUI()->setStyleSheet("background-color:Grey;");
     // creat the file menu in menu bar
     // define menu action
     mp_exitAction = new QAction(tr("E&xit"),this);
@@ -37,19 +38,20 @@ ATMMainWindow::ATMMainWindow(simulation::Simulation *ap_theSimulation)
     // set menu Bar
     mp_mainVLayout->setMenuBar(mp_menuBar);
     // add ATM GUI
-    mp_mainVLayout->addWidget(ap_theSimulation->getGUI());
-    //mp_mainVLayout->setAlignment(ap_theSimulation->getGUI(),Qt::AlignCenter);
+    mp_mainVLayout->addWidget(mp_simulation->getGUI());
     // set layout to current widget
     setLayout(mp_mainVLayout);
-
+    // set fixed size main window
+    setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
 
 }
 
 ATMMainWindow::~ATMMainWindow()
 {
-
+    //qDebug()<< "Destructor ATMMainWindow";
     delete mp_exitAction;
     mp_exitAction = nullptr;
+
 
 }
 
@@ -60,4 +62,12 @@ QSize ATMMainWindow::sizeHint() const
     size.setWidth(ATM_GUI_WIDTH);
 
     return size;
+}
+
+void ATMMainWindow::closeEvent(QCloseEvent *event)
+{
+
+    qDebug()<< "ATMMainWindow closed";
+    mp_simulation->mainWindowClosed();
+
 }

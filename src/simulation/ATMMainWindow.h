@@ -21,12 +21,13 @@ public:
     ATMMainWindow(simulation::Simulation *ap_theSimulation);
     ~ATMMainWindow() override;
     QSize sizeHint() const override;
+    void closeEvent(QCloseEvent *event) override;
 private slots:
 
 protected:
 private:
-    // main widget for the ATM GUI Window
-    QWidget *mp_mainWidget =nullptr;
+    // simulation object
+    simulation::Simulation *mp_simulation = nullptr;
     // main layout for the ATM GUI Window
     QVBoxLayout *mp_mainVLayout =nullptr;
     // menu bar for the ATM GUI Window
