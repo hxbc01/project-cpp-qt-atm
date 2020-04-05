@@ -40,7 +40,7 @@ protected:
 
 
 private:
-    std::thread &mr_atmThread;
+    std::thread& mr_atmThread;
 
 };
 }

@@ -11,6 +11,7 @@ utils::ThreadGuard::~ThreadGuard()
 {
     if (mr_atmThread.joinable())
     {
+
         mr_atmThread.join();
     }
 
