@@ -15,6 +15,7 @@ class QLabel;
 class QVBoxLayout;
 class QPushButton;
 class QHBoxLayout;
+class QTextEdit;
 QT_END_NAMESPACE
 namespace simulation
 {
@@ -45,11 +46,11 @@ private:
     QPushButton *mp_rightButtons[m_numRightButtons];
     // horizontal layout for the display
     QHBoxLayout *mp_displayHLayout=nullptr;
-    // main display screen
-    QLabel *mp_display=nullptr;
-    // The following are used only for setting the ATM GUI size
-    const int ATM_DISPLAY_WIDTH = 300;
-    const int ATM_DISPLAY_HEIGHT = 260;
+    // display screen
+    QTextEdit *mp_mainDisplay=nullptr;
+    // The following are used only for setting the ATM main display size
+    const int ATM_MAIN_DISPLAY_WIDTH = 300;
+    const int ATM_MAIN_DISPLAY_HEIGHT = 260;
 
 
 };
