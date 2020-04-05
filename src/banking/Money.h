@@ -62,7 +62,10 @@ public:
      *  @return true if this amount is <= compareTo amount
      */
     bool lessEqual(const Money *a_compareTo) const;
-
+    /** set Money amount
+     *
+     */
+    void setMoney(int a_dollars=0, int a_cents=0);
 
 protected:
 

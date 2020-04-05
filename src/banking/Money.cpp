@@ -47,3 +47,9 @@ QString banking::Money::toString() const
 {
  return "$" + QString::number(m_cents/100) + (m_cents %100 >= 10  ? "." + QString::number(m_cents % 100) : ".0" + QString::number(m_cents % 100));
 }
+
+void banking::Money::setMoney(int a_dollars, int a_cents)
+{
+    m_cents = (100 * a_dollars) + a_cents;
+
+}
