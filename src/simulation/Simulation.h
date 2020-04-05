@@ -25,6 +25,7 @@ namespace banking
 class Status;
 class Message;
 class Balances;
+class Money;
 }
 namespace atm
 {
@@ -48,15 +49,6 @@ class Simulation
 {
 
 public:
-    /** Default Constructor
-     */
-    Simulation();
-    /** Constructor
-     *
-     *  @param atm the ATM being simulated
-     */
-    Simulation(atm::ATM *ap_atm);
-
     /** Destructor
      */
     ~Simulation();
@@ -64,7 +56,12 @@ public:
      *
      *  @return the instance of this class
      */
-    Simulation* getInstance();
+    static Simulation* getInstance(atm::ATM *ap_atm);
+    /** Simulated getting initial amount of cash from operator
+     *
+     *  @return value of initial cash entered
+     */
+    banking::Money* getInitialCash();
     /** Simulate sending a message to bank
      *
      *  @param message the message to send
@@ -78,15 +75,19 @@ public:
      *
      *  @param on true if state is now "on", false if it is "off"
      */
-    void switchChanged(const bool &on);
+    void switchChanged(const bool &on) const;
+    /** Notify the ATM that the main window is closed
+     *
+     */
+    void mainWindowClosed() const;
     /** Notify ATM that a card has been inserted
      */
-    void cardInserted();
+    void cardInserted() const;
     /** Accessor for GUI Panel that simulates the ATM
      *
      *  @return the GUI Panel
      */
-    GUI* getGUI();
+    GUI* getGUI() const;
 
     /* Possible values for mode parameter to readInput() */
 
@@ -109,6 +110,19 @@ protected:
 
 
 private:
+    /** Constructor
+     *
+     *  @param atm the ATM being simulated
+     */
+    Simulation(atm::ATM *ap_atm);
+    /** Copy Constructor
+     *
+     */
+    Simulation(Simulation const&){};
+    /** assignment Constructor
+     *
+     */
+    Simulation& operator=(Simulation const&){};
     /** The ATM object for the ATM being simulated
      */
     atm::ATM *mp_atm=nullptr;
@@ -149,7 +163,7 @@ private:
     SimulatedBank *mp_simulatedBank=nullptr;
     /** The one and only instance of this class
      */
-    Simulation *mp_theInstance=nullptr;
+    static Simulation *mp_theInstance;
 
 };
 } // namespace simulation
