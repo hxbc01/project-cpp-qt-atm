@@ -19,9 +19,6 @@ class Session
 {
 
 public:
-    /** Default Constructor
-     */
-    Session();
     /** Constructor
      *
      *  @param atm the ATM on which the session is performed

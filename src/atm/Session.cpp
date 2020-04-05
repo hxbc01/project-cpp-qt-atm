@@ -7,10 +7,6 @@
 #include "CardReader.h"
 #include "CustomerConsole.h"
 
-atm::Session::Session()
-{
-
-}
 atm::Session::Session(ATM *ap_atm)
 {
     mp_atm=ap_atm;
@@ -20,7 +16,7 @@ atm::Session::Session(ATM *ap_atm)
 
 atm::Session::~Session()
 {
-
+qDebug()<< "Destructor Session";
 }
 
 void atm::Session::performSession()
