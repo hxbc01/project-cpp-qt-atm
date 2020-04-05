@@ -31,7 +31,7 @@ simulation::ATMPanel::ATMPanel(const GUI *ap_gui,
     mp_ATMLabel = new QLabel("ATM");
     mp_ATMLabel->setAlignment(Qt::AlignCenter | Qt::AlignTop);
     mp_ATMLabel->setFont(QFont("Verdana",24,75));
-
+    mp_ATMLabel->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
     // create a the ATM GUI layout
     mp_ATMVLayout = new QVBoxLayout();
     // Add the ATM label
@@ -73,7 +73,7 @@ simulation::ATMPanel::ATMPanel(const GUI *ap_gui,
 
 simulation::ATMPanel::~ATMPanel()
 {
-
+//qDebug()<< "Destructor ATMPanel";
 }
 
 

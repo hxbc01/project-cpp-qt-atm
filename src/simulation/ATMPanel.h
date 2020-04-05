@@ -67,7 +67,7 @@ protected:
 private:
     // main layout for the ATM GUI Window
     QVBoxLayout *mp_ATMVLayout =nullptr;
-    // Top label for the ATM GUI Window
+    // top label for the ATM GUI Window
     QLabel *mp_ATMLabel =nullptr;
     // horizontal layout for the card reader and envelope acceptor
     QHBoxLayout *mp_CEHLayout =nullptr;
