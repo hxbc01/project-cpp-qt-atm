@@ -8,8 +8,11 @@
 #ifndef ATM_H
 #define ATM_H
 #include <QString>
+#include <QObject>
+#include <thread>
 #include <mutex>
 #include <condition_variable>
+#include <future>
 /** Representation for the ATM itself.  An object of this class "owns"
  *  the objects representing the component parts of the ATM, and the
  *  communications network, and is responsible for creating customer
@@ -33,13 +36,11 @@ class ReceiptPrinter;
 } // namespace atm
 namespace atm
 {
-class ATM
+class ATM : public QObject
 {
+    Q_OBJECT
 
 public:
-    /** Default Constructor
-     */
-    ATM();
     /** Constructor
      *
      *  @param id the unique ID for this ATM
@@ -52,22 +53,31 @@ public:
     /** Destructor
      */
     ~ATM();
-    /** Overload () operator to make ATM objects callable.
-      * This method contains the code to be executed by the
+    /** This method contains the code to be executed by the
       * ATM thread
       */
-    void operator()();
+    void run();
+
+    /** Start the ATM thread
+      */
+    void startATMThread();
+    /** Stop the ATM thread
+      */
+    void stopATMThread();
     /** Inform the ATM (thread) that the switch on the operator console has been moved
      *  to the "on" position.
      */
     void switchOn();
-    /** Inform the ATM that the switch on the operator console has been moved
+    /** Inform the ATM (thread) that the switch on the operator console has been moved
      *  to the "off" position.
      */
     void switchOff();
-    /** Inform the ATM that a card has been inserted into the card reader.
+    /** Inform the ATM (thread) that a card has been inserted into the card reader.
      */
     void cardInserted();
+    /** Inform the ATM (thread) that the main window is closed
+     */
+    void mainWindowClosed();
 
     // The following methods allow objects of other classes to access component
     // parts of the ATM
@@ -138,13 +148,15 @@ public:
 
 protected:
 
+signals:
+     void performStartupSignal();
 
-private:
-    // Private methods
-
+private slots:
      /** Perform the System Startup use case when switch is turned on
       */
     void performStartup();
+
+private:
     /** Perform the System Shutdown use case when switch is turned off
      */
     void performShutdown();
@@ -244,12 +256,25 @@ private:
     /** mutex object to protect shared data : bool m_cardInserted
      */
     std::mutex m_mxcardInserted;
-    /** condition variable associated with shared data : bool m_cardInserted
+    /** condition variable associated with shared data
      */
-    std::condition_variable m_cvcardInserted;
-    /** condition variable associated with shared data : bool m_switchOn
+    std::condition_variable m_conditionVariable;
+    /** ATM thread object
      */
-    std::condition_variable m_cvswitchOn;
+    std::thread ATMThread;
+    /** ATM stop thread object
+     */
+    std::atomic<bool> m_stopATMThread;
+
+
+
+    bool m_test;
+
+    /** mutex object to protect shared data : bool m_switchOn
+     */
+    std::mutex m_mxtest;
+
+
 
 
 };
