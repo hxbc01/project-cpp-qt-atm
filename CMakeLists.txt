@@ -34,8 +34,8 @@ add_subdirectory(./src/atm)
 add_subdirectory(./src/simulation)
 add_subdirectory(./src/utils)
 
-set (INTERN_LINK_LIBS ${INTERN_LINK_LIBS} atm banking physical transaction simulation utils)
-set (EXTERN_LINK_LIBS ${EXTERN_LINK_LIBS} Qt5::Widgets)
+set (INTERN_LINK_LIBS ${INTERN_LINK_LIBS} simulation atm  physical transaction banking utils)
+set (EXTERN_LINK_LIBS ${EXTERN_LINK_LIBS} Qt5::Widgets -lpthread)
 
 # target
 add_executable(${PROJECT_NAME}
