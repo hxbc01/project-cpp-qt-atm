@@ -8,6 +8,7 @@
 #ifndef SIMCARDREADER_H
 #define SIMCARDREADER_H
 #include <QPushButton>
+#include <QString>
 /** Simulate the card reader
  */
 namespace simulation
@@ -18,13 +19,20 @@ namespace simulation
 {
 class SimCardReader : public QPushButton
 {
+    Q_OBJECT
+
+private slots:
+    /**
+     * Card Reader button clicked
+     */
+    void pushCardReaderButton();
 
 public:
     /** Constructor
      *
      *  @param simulation the Simulation object
      */
-    explicit SimCardReader(const QString &text, Simulation *ap_theSimulation);
+    explicit SimCardReader(const Simulation *ap_simulation);
     /** Destructor
      */
     ~SimCardReader();
@@ -33,6 +41,11 @@ protected:
 
 
 private:
+    /** simulation object
+     */
+    const Simulation *mp_simulation=nullptr;
+
+
 
 };
 }
