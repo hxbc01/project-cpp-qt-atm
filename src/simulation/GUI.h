@@ -15,6 +15,11 @@ class QStackedWidget;
 class QLabel;
 class QVBoxLayout;
 QT_END_NAMESPACE
+namespace banking
+{
+class Card;
+class Money;
+}
 namespace simulation
 {
 class SimOperatorPanel;
@@ -25,6 +30,9 @@ class SimCashDispenser;
 class SimEnvelopeAcceptor;
 class SimReceiptPrinter;
 class ATMPanel;
+class LogPanel;
+class CardPanel;
+class BillsPanel;
 }
 namespace simulation
 {
@@ -54,15 +62,61 @@ public:
     /** Destructor
      */
     ~GUI();
+    /** Accessor for the stacked widget that simulates the ATM
+     *
+     *  @return the stacked widget
+     */
+    QStackedWidget* getStackedWidget() const;
+    /** Accessor for the log panel
+     *
+     *  @return the log panel
+     */
+    LogPanel* getLogPanel() const;
+    /** Accessor for the ATM panel
+     *
+     *  @return the ATM panel
+     */
+    ATMPanel* getATMPanel() const;
+    /** Simulate reading of a card
+     *
+     *
+     *  @return Card object representing information on the card if read
+     *          successfully, null if read not successfully
+     */
+    banking::Card* readCard();
+    /** Simulate getting the amount of cash in the cash dispenser from the operator
+     *  at start up
+     *
+     *  @return dollar value of the bills in the cash dispenser (# of bills x $20)
+     */
+
+    banking::Money* getInitialCash();
+
+
 
 protected:
 
 
 private:
-    /** The panel displaying the ATM itself
+    /** displaying the ATM panel itself
      */
     ATMPanel *mp_atmPanel=nullptr;
-    /** The overall GUI of the ATM
+    /** displaying the Log panel
+     */
+    LogPanel *mp_logPanel=nullptr;
+    /** displaying the Card panel
+     */
+    CardPanel *mp_cardPanel=nullptr;
+    /** displaying the Bills panel
+     */
+    BillsPanel *mp_billsPanel=nullptr;
+    /** Card Object
+     */
+    banking::Card *mp_card=nullptr;
+    /** Money Object
+     */
+    banking::Money *mp_money=nullptr;
+    /** overall GUI of the ATM
      */
     QStackedWidget *mp_atmGUI=nullptr;
     /** layout for the stacked GUI Windows
