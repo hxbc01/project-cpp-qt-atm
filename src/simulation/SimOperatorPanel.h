@@ -32,6 +32,10 @@ private slots:
      * On/OFF button clicked
      */
     void pushATMButton();
+    /**
+     * log show button clicked
+     */
+    void pushShowLogButton();
 public:
     /** Default Constructor
      */
@@ -52,16 +56,19 @@ protected:
 
 
 private:
-    // Label On/Off Info
+    // label On/Off Info
     QLabel *mp_infoLabel=nullptr;
-    // Button On/Off
+    // ATM On/Off button
     QPushButton *mp_buttonONOFF=nullptr;
-    // button for showing the log
+    // log show button
     QPushButton *mp_showLogButton =nullptr;
     // vertical layout for the On/Off button
     QVBoxLayout *mp_buttonONOFFVLayout=nullptr;
     // vertical layout for the operator panel
     QHBoxLayout *mp_operatorHLayout=nullptr;
+    /** simulation object
+     */
+    const Simulation *mp_simulation=nullptr;
 
 
 };
