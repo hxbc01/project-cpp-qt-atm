@@ -1,10 +1,11 @@
 #include <QDebug>
 #include "Card.h"
 
-banking::Card::Card(): Card(0)
+banking::Card::Card()
 {
 
 }
+
 banking::Card::Card(int a_number):m_number(a_number)
 {
 
@@ -21,4 +22,7 @@ int banking::Card::getNumber() const
 }
 
 
-
+void banking::Card::setNumber(int a_number)
+{
+    m_number = a_number;
+}

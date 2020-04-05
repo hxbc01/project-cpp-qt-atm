@@ -32,6 +32,10 @@ public:
       *  @return the number of the card
       */
     int getNumber() const;
+    /** Accessor for number
+      *
+      */
+    void setNumber(int number);
 
 protected:
 
