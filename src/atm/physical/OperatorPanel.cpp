@@ -1,6 +1,7 @@
 #include <QDebug>
 #include "OperatorPanel.h"
 #include "Money.h"
+#include "Simulation.h"
 atm::physical::OperatorPanel::OperatorPanel()
 {
 
@@ -18,5 +19,5 @@ atm::physical::OperatorPanel::~OperatorPanel()
 
 banking::Money* atm::physical::OperatorPanel::getInitialCash()
 {
-    //return Simulation.getInstance().getInitialCash();
+    return simulation::Simulation::getInstance(mp_atm)->getInitialCash();
 }
