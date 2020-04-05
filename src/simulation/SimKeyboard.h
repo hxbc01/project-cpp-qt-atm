@@ -44,10 +44,6 @@ private:
     QPushButton *mp_button[m_buttons];
     // left buttons labels
     QStringList m_buttonsLabels = {"1", "2", "3","CANCEL", "4", "5", "6", "CLEAR","7", "8", "9", "ENTER", "", "0", "", ""};
-    // right buttons array
-    //QPushButton *mp_operationButtons[m_operationButtons];
-    // left buttons labels
-    //QStringList m_operationLabels = {"CANCEL", "CLEAR", "ENTER", ""};
 
 
 };

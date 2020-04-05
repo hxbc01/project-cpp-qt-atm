@@ -13,7 +13,6 @@ simulation::SimKeyboard::SimKeyboard(SimDisplay *ap_display, SimEnvelopeAcceptor
         int column = i % (m_buttons/4);
         int row = i / (m_buttons/4);
         mp_keyboardGridLayout->addWidget(mp_button[i], row, column);
-        qDebug()<< row << column;
     }
     setLayout(mp_keyboardGridLayout);
 
