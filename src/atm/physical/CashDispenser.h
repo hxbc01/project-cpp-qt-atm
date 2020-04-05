@@ -41,7 +41,7 @@ public:
      *
      *  @param initialCash the amount of money in the dispenser
      */
-    void setInitialCashOnATM(const banking::Money a_initialCash);
+    void setInitialCashOnATM(banking::Money *a_initialCash);
     /** See if there is enough cash on hand to satisfy a request
      *
      *  @param amount the amount of cash the customer wants

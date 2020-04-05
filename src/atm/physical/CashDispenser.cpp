@@ -9,20 +9,18 @@ atm::physical::CashDispenser::CashDispenser()
 atm::physical::CashDispenser::CashDispenser(Log *ap_log)
 {
     mp_log = ap_log;
-    mp_cashOnATM = new banking::Money(0);
 
 }
 
 atm::physical::CashDispenser::~CashDispenser()
 {
-    delete mp_cashOnATM;
-    mp_cashOnATM = nullptr;
+
 
 }
 
-void atm::physical::CashDispenser::setInitialCashOnATM(const banking::Money a_initialCash)
+void atm::physical::CashDispenser::setInitialCashOnATM(banking::Money *a_initialCash)
 {
-    *mp_cashOnATM = a_initialCash;
+    mp_cashOnATM = a_initialCash;
 
 }
 
