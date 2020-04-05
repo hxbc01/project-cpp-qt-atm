@@ -7,17 +7,43 @@
  */
 #ifndef LOGPANEL_H
 #define LOGPANEL_H
+#include <QWidget>
 /** The GUI panel that displays the ATM's internal log
  */
+QT_BEGIN_NAMESPACE
+class QLabel;
+class QVBoxLayout;
+class QPushButton;
+class QHBoxLayout;
+class QTextEdit;
+QT_END_NAMESPACE
 namespace simulation
 {
-class LogPanel
+class GUI;
+}
+namespace simulation
 {
+class LogPanel : public QWidget
+{
+    Q_OBJECT
+
+private slots:
+    /**
+     * hide log button clicked
+     */
+    void pushHideLogButton();
+    /**
+     * clear log button clicked
+     */
+    void pushClearLogButton();
 
 public:
-    /** Default Constructor
+    /** Constructor
+     *
+     *  @param gui the the overall GUI
      */
-    LogPanel();
+
+    LogPanel(const GUI *ap_GUI);
     /** Destructor
      */
     ~LogPanel();
@@ -26,6 +52,22 @@ protected:
 
 
 private:
+    // vertical layout for the Log panel
+    QVBoxLayout *mp_logPanelVLayout=nullptr;
+    // Horizontal layout for the Log buttons
+    QHBoxLayout *mp_logPanelButtonsHLayout=nullptr;
+    // display screen
+    QTextEdit *mp_logDisplay=nullptr;
+    // top label for the Log panel
+    QLabel *mp_logLabel=nullptr;
+    // clear log button
+    QPushButton *mp_clearLogButton=nullptr;
+    // hide log button
+    QPushButton *mp_hideLogButton=nullptr;
+    /** Panel containing the GUI that simulates the ATM
+     */
+    const GUI *mp_gui=nullptr;
+
 
 };
 }
