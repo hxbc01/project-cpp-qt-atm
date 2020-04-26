@@ -11,7 +11,10 @@
  *  manage a physical device; in this simulation,  it uses classes
  *  in package simulation to simulate the device.
  */
+namespace banking
+{
 class Receipt;
+}
 namespace atm
 {
 namespace physical
@@ -30,7 +33,7 @@ public:
        *
        *  @param receipt object containing the information to be printed
        */
-    void printReceipt(Receipt *ap_receipt);
+    void printReceipt(banking::Receipt *ap_receipt);
 
 protected:
 

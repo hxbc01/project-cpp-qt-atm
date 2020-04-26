@@ -11,7 +11,7 @@ atm::physical::ReceiptPrinter::~ReceiptPrinter()
 
 }
 
-void atm::physical::ReceiptPrinter::printReceipt(Receipt *ap_receipt)
+void atm::physical::ReceiptPrinter::printReceipt(banking::Receipt *ap_receipt)
 {
 
 }
