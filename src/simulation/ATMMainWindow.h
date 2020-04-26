@@ -18,14 +18,15 @@ class ATMMainWindow : public QWidget
     Q_OBJECT
 
 public:
-    ATMMainWindow(simulation::Simulation *ap_theSimulation);
+    ATMMainWindow(simulation::Simulation *ap_theSimulation= nullptr);
     ~ATMMainWindow() override;
     QSize sizeHint() const override;
-    void closeEvent(QCloseEvent *event) override;
 private slots:
 
 protected:
+    void closeEvent(QCloseEvent *event) override;
 private:
+    bool closeWindow();
     // simulation object
     simulation::Simulation *mp_simulation = nullptr;
     // main layout for the ATM GUI Window

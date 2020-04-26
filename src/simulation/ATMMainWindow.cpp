@@ -7,8 +7,12 @@
 #include <QMenuBar>
 #include <QLineEdit>
 #include <QPalette>
+#include <QMessageBox>
+#include <QCloseEvent>
+
 
 ATMMainWindow::ATMMainWindow(simulation::Simulation *ap_simulation)
+
 {
     // get pointer to simulation object
     mp_simulation = ap_simulation;
@@ -66,8 +70,29 @@ QSize ATMMainWindow::sizeHint() const
 
 void ATMMainWindow::closeEvent(QCloseEvent *event)
 {
+    if (closeWindow()) {
+        qDebug()<< "ATMMainWindow closed";
 
-    qDebug()<< "ATMMainWindow closed";
-    mp_simulation->mainWindowClosed();
+        mp_simulation->mainWindowClosed();
+        event->accept();
+    }
+    else {
+            event->ignore();
+    }
+
+
+
+}
+
+bool ATMMainWindow::closeWindow()
+{
+    QMessageBox::StandardButton answer = QMessageBox::question(
+            this,
+            tr("Close the ATM"),
+            tr("Do you want to close ATM Window?"),
+            QMessageBox::Yes | QMessageBox::No
+        );
+
+        return answer == QMessageBox::Yes;
 
 }
