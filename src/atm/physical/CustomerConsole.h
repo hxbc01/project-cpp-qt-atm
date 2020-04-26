@@ -8,11 +8,16 @@
 #ifndef CUSTOMERCONSOLE_H
 #define CUSTOMERCONSOLE_H
 #include <QString>
+#include <exception>
 /** Manager for the ATM's customer console.  In a real ATM, this would
  *  manage a physical device; in this simulation,  it uses classes
  *  in package simulation to simulate the device (actually two separate
  *  devices - the display and the keyboard.)
  */
+namespace banking
+{
+    class Money;
+}
 namespace atm
 {
 namespace physical
@@ -31,7 +36,7 @@ public:
      *
      *  @param message the message to display
      */
-    void display(QString a_message) const;
+    void display(const QString &ar_message);
     /** Read a PIN entered by the customer (echoed as asterisks)
      *
      *  @param prompt the message to display prompting the customer to enter PIN
@@ -39,7 +44,7 @@ public:
      *  @exception Cancelled if customer presses the CANCEL key before pressing ENTER
      */
 
-    int readPIN(QString prompt) const;
+    int readPIN(const QString &ar_prompt);
 
     /** Display a menu of options and return choice made by customer
        *
@@ -53,7 +58,7 @@ public:
        *  @exception Cancelled if customer presses the CANCEL key before choosing option
        */
 
-      //->public synchronized int readMenuChoice(String prompt, String[] menu) throws Cancelled
+      int readMenuChoice(const QString &ar_prompt, const QStringList &ar_menu);
 
     /** Read a money amount entered by the customer
      *
@@ -62,13 +67,19 @@ public:
      *  @exception Cancelled if customer presses the CANCEL key before pressing ENTER
      */
 
-    //->public synchronized Money readAmount(String prompt) throws Cancelled
+    banking::Money* readAmount(QString &ar_prompt);
 
     /** Exception thrown when the user presses the cancel key while the ATM is
      *  waiting for some action
      */
 
-    //->public static class Cancelled extends Exception
+     class Cancelled : public std::exception {
+     public :
+         QString what() {
+         return "Cancelled by customer";
+      }
+
+     };
 
 
 protected:
