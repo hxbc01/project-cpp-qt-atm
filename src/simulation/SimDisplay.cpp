@@ -11,7 +11,7 @@ simulation::SimDisplay::SimDisplay()
     mp_buttonLeftVLayout = new QVBoxLayout();
     mp_buttonRightVLayout = new QVBoxLayout();
     mp_displayHLayout = new QHBoxLayout();
-    mp_mainDisplay = new QTextEdit("Hello\nggggg\nzzzz");
+    mp_mainDisplay = new QTextEdit();
     mp_mainDisplay->setBackgroundRole(QPalette::Base);
     mp_mainDisplay->setFrameStyle(QFrame::Panel | QFrame::Sunken);
     mp_mainDisplay->setSizeIncrement(QSizePolicy::Fixed,QSizePolicy::Fixed);
@@ -33,6 +33,7 @@ simulation::SimDisplay::SimDisplay()
 
 
 
+
 }
 
 
@@ -41,5 +42,38 @@ simulation::SimDisplay::~SimDisplay()
 
 }
 
+void simulation::SimDisplay::clearDisplay()
+{
+    mp_mainDisplay->clear();
 
+}
+
+void simulation::SimDisplay::display(const QString &text)
+{
+    mp_mainDisplay->append(text);
+}
+
+
+//void simulation::SimDisplay::setEcho(const QString &echo)
+//{
+//    QString l_echo = echo;
+//    //l_echo=l_echo.rightJustified(10);
+//    mp_mainDisplay->setAlignment(Qt::AlignCenter);
+////    mp_mainDisplay->textCursor().select(QTextCursor::LineUnderCursor);
+////    mp_mainDisplay->textCursor().removeSelectedText();
+//    mp_mainDisplay->textCursor().insertText(echo);
+
+//}
+
+void simulation::SimDisplay::setEcho(const QString &echo)
+{
+    QString l_echo;
+    l_echo.append(echo);
+    //l_echo=l_echo.rightJustified(10);
+    mp_mainDisplay->setAlignment(Qt::AlignCenter);
+//    mp_mainDisplay->textCursor().select(QTextCursor::LineUnderCursor);
+//    mp_mainDisplay->textCursor().removeSelectedText();
+    mp_mainDisplay->textCursor().insertText(l_echo);
+
+}
 

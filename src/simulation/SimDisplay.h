@@ -29,6 +29,20 @@ public:
     /** Destructor
      */
     ~SimDisplay();
+    /** Clear the display
+       */
+    void clearDisplay();
+    /** Add text to the display - may contain one or more lines delimited by \n
+      *
+      *  @param text the text to display
+      */
+    void display(const QString &text);
+    /** Set echoed input on the display
+       *
+       *  @param echo the line to be echoed - always the entire line
+       */
+   void setEcho(const QString &echo);
+
 
 protected:
 
