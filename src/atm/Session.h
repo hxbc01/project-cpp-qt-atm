@@ -7,16 +7,24 @@
  */
 #ifndef SESSION_H
 #define SESSION_H
+#include <QObject>
+#include <mutex>
+#include <condition_variable>
 /** Representation for one ATM
  * session serving a single customer. */
+namespace banking
+{
+class Card;
+}
 namespace atm
 {
 class ATM;
 }
 namespace atm
 {
-class Session
+class Session : public QObject
 {
+    Q_OBJECT
 
 public:
     /** Constructor
@@ -38,7 +46,13 @@ public:
       */
     void setPIN(int a_pin);
 
+
 protected:
+
+signals:
+    void readCardSignal();
+    void customerConsoleDisplaySignal(const QString&);
+    void readPINSignal(const QString&);
 
 
 private:
@@ -82,6 +96,7 @@ private:
     /** Session finished
      */
     static const int FINAL_STATE = 6;
+
 
 };
 }
