@@ -7,6 +7,7 @@
  */
 #ifndef CARDPANEL_H
 #define CARDPANEL_H
+#include <QDialog>
 #include <QWidget>
 #include <mutex>
 #include <condition_variable>
@@ -48,7 +49,7 @@ public:
     int readCardNumber();
 
     // eventloop to wait until number of card entered
-    QEventLoop m_loop;
+    QEventLoop m_eventLoop;
 
 
 protected:
