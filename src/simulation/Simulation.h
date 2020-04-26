@@ -7,6 +7,7 @@
  */
 #ifndef SIMULATION_H
 #define SIMULATION_H
+#include <QString>
 /** Simulation of the physical components of the ATM, including its network
  *  connection to the bank.  An instance is created at startup by either the
  *  application's main() program or the applet's init() method.
@@ -20,12 +21,14 @@
  *  remaining methods simulate specific operations of the ATM, and are forwarded
  *  to either the GUI panel or the simulated bank to actually carry them out.
  */
+
 namespace banking
 {
 class Status;
 class Message;
 class Balances;
 class Money;
+class Card;
 }
 namespace atm
 {
@@ -56,7 +59,7 @@ public:
      *
      *  @return the instance of this class
      */
-    static Simulation* getInstance(atm::ATM *ap_atm);
+    static Simulation* getInstance(atm::ATM *ap_atm = nullptr);
     /** Simulated getting initial amount of cash from operator
      *
      *  @return value of initial cash entered
@@ -89,11 +92,44 @@ public:
      */
     GUI* getGUI() const;
 
+    /** Simulate reading of a card
+     *
+     *
+     *  @return Card object representing information on the card if read
+     *          successfully, null if not read successfully
+     */
+    banking::Card* readCard();
+    /** Simulate ejecting a card
+      */
+    void ejectCard();
+    /** Simulate retaining a card
+     */
+    void retainCard();
+    /** Clear the simulated display
+     */
+    void clearDisplay();
+    /** Write one or more lines to the display - beginning just after the
+     *  last line written
+     *
+     *  @param text the text to display
+     */
+    void display(const QString &text);
+
+    /** Simulate reading input from the keyboard
+     *
+     *  @param mode the input mode to use - one of the constants defined below.
+     *  @param maxValue the maximum acceptable value (used in MENU_MODE only)
+     *  @return the line that was entered - null if user pressed CANCEL.
+     */
+    QString* readInput(const int &mode, const int &maxValue);
+
+
     /* Possible values for mode parameter to readInput() */
 
     /** Read input in PIN mode - allow user to enter several characters,
      *  and to clear the line if the user wishes; echo as asterisks
      */
+
     static const int PIN_MODE = 1;
 
     /** Read input in amount mode - allow user to enter several characters,

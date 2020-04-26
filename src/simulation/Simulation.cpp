@@ -13,7 +13,9 @@
 //#include "SimulatedBank.h"
 
 simulation::Simulation* simulation::Simulation::mp_theInstance = nullptr;
-
+const int simulation::Simulation::PIN_MODE;
+const int simulation::Simulation::AMOUNT_MODE;
+const int simulation::Simulation::MENU_MODE;
 simulation::Simulation::Simulation(atm::ATM *ap_atm)
 {
     // ATM object
@@ -60,6 +62,53 @@ simulation::Simulation* simulation::Simulation::getInstance(atm::ATM *ap_atm)
 banking::Money* simulation::Simulation::getInitialCash()
 {
     return mp_gui->getInitialCash();
+}
+
+void simulation::Simulation::ejectCard()
+{
+    //cardReader.animateEjection();
+
+    // Re-enable on-off switch
+    mp_operatorPanel->setEnabled(true);
+
+}
+
+void simulation::Simulation::clearDisplay()
+{
+    mp_display->clearDisplay();
+
+}
+
+void simulation::Simulation::display(const QString &text)
+{
+    mp_display->display(text);
+
+}
+
+QString* simulation::Simulation::readInput(const int &mode, const int &maxValue)
+{
+    return mp_keyboard->readInput(mode, maxValue);
+}
+
+void simulation::Simulation::retainCard()
+{
+    //cardReader.animateRetention();
+
+    // Re-enable on-off switch
+    mp_operatorPanel->setEnabled(true);
+
+}
+
+banking::Card* simulation::Simulation::readCard()
+{
+    // Machine can't be turned off while there is a card in it
+    mp_operatorPanel->setEnabled(false);
+
+    //cardReader.animateInsertion();
+
+    // Since we don't have a magnetic stripe reader, we'll simulate by
+    // having customer type the card number in
+    return mp_gui->readCard();
 }
 
 //banking::Status* simulation::Simulation::sendMessage(banking::Message *ap_message, banking::Balances *ap_balances)
