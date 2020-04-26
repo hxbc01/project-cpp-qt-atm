@@ -21,6 +21,8 @@ namespace banking
 class Card;
 class Balances;
 class Message;
+class Receipt;
+class Status;
 }
 namespace atm
 {
@@ -44,7 +46,7 @@ public:
 
     /** Destructor
      */
-    ~Transaction();
+    virtual ~Transaction();
     /** Create a transaction of an appropriate type by asking the customer
      *  what type of transaction is desired and then returning a newly-created
      *  member of the appropriate subclass
@@ -68,7 +70,7 @@ public:
      *          false if customer does not desire to do another transaction
      *  @exception CardRetained if card was retained due to too many invalid PIN's
      */
-    //->public boolean performTransaction() throws CardRetained
+    bool performTransaction();
 
     /** Perform the Invalid PIN Extension - reset session pin to new value if successful
      *
@@ -78,8 +80,7 @@ public:
      *             instead of re-entering PIN
      *  @exception CardRetained if card was retained due to too many invalid PIN's
      */
-    //->public Status performInvalidPINExtension() throws CustomerConsole.Cancelled,
-                                                      //CardRetained*/
+    banking::Status* performInvalidPINExtension();
 
     /** Get serial number of this transaction
      *
@@ -87,21 +88,7 @@ public:
      */
     int getSerialNumber() const;
 
-    /** Get specifics for the transaction from the customer - each
-     *  subclass must implement this appropriately.
-     *
-     *  @return message to bank for initiating this transaction
-     *  @exception CustomerConsole.Cancelled if customer cancelled this transaction
-     */
-    //->protected abstract Message getSpecificsFromCustomer() throws CustomerConsole.Cancelled;
 
-    /** Complete an approved transaction  - each subclass must implement
-     *  this appropriately.
-     *
-     *  @return receipt to be printed for this transaction
-     *  @exception CustomerConsole.Cancelled if customer cancelled this transaction
-     */
-    //->protected abstract Receipt completeTransaction() throws CustomerConsole.Cancelled;
 
 
     // Local class representing card retained exception
@@ -110,16 +97,34 @@ public:
     /** Exception that is thrown when the customer's card is retained due to too
      *  many invalid PIN entries
      */
-    /*public static class CardRetained extends Exception
-    {
-        /** Constructor
-         */
-        /*public CardRetained()
-        {
-            super("Card retained due to too many invalid PINs");
-        }
-    }*/
+
+    class CardRetained : public std::exception {
+    public :
+        QString what() {
+        return "Card retained due to too many invalid PINs";
+     }
+
+    };
+
 protected:
+    
+    /** Get specifics for the transaction from the customer - each
+     *  subclass must implement this appropriately.
+     *
+     *  @return message to bank for initiating this transaction
+     *  @exception CustomerConsole.Cancelled if customer cancelled this transaction
+     */
+     virtual banking::Message* getSpecificsFromCustomer()=0;
+
+    /** Complete an approved transaction  - each subclass must implement
+     *  this appropriately.
+     *
+     *  @return receipt to be printed for this transaction
+     *  @exception CustomerConsole.Cancelled if customer cancelled this transaction
+     */
+    virtual banking::Receipt* completeTransaction()=0;
+    
+    
     // Instance variables
 
 
