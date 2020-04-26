@@ -21,7 +21,7 @@ simulation::BillsPanel::BillsPanel()
 
     // connect clicked signal to slot
     connect(mp_billsNumberField,SIGNAL(textEdited(QString)),this,SLOT(validateText()));
-    connect(mp_billsNumberField,SIGNAL(returnPressed()), &m_loop,SLOT(quit()));
+    connect(mp_billsNumberField,SIGNAL(returnPressed()), &m_eventLoop,SLOT(quit()));
 
 
     mp_billsPanelVLayout = new QVBoxLayout();
@@ -36,6 +36,10 @@ simulation::BillsPanel::BillsPanel()
 
 simulation::BillsPanel::~BillsPanel()
 {
+    if (m_eventLoop.isRunning()){
+        m_eventLoop.quit();
+    }
+
 
 }
 

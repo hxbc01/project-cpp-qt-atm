@@ -45,7 +45,7 @@ public:
     int readBills();
 
     // eventloop to wait until number of bills entered
-    QEventLoop m_loop;
+    QEventLoop m_eventLoop;
 
 protected:
 
