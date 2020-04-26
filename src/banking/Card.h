@@ -15,9 +15,6 @@ class Card
 {
 
 public:
-    /** Default Constructor
-     */
-    Card();
     /** Constructor
      *
      *  @param number the card number
@@ -32,10 +29,6 @@ public:
       *  @return the number of the card
       */
     int getNumber() const;
-    /** Accessor for number
-      *
-      */
-    void setNumber(int number);
 
 protected:
 
