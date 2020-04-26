@@ -30,8 +30,7 @@ simulation::GUI::GUI(SimOperatorPanel *ap_operatorPanel,
                      SimEnvelopeAcceptor *ap_envelopeAcceptor,
                      SimReceiptPrinter *ap_receiptPrinter)
 {
-    // create a Card object
-    mp_card = new banking::Card();
+
     // create a Money object for initial cash
     mp_money = new banking::Money();
     // overall ATM GUI
@@ -60,6 +59,8 @@ simulation::GUI::GUI(SimOperatorPanel *ap_operatorPanel,
     mp_atmGUI->addWidget(mp_atmPanel);
     // add LogPanel widget
     mp_atmGUI->addWidget(mp_logPanel);
+    // add CardPanel widget
+    mp_atmGUI->addWidget(mp_cardPanel);
     // add BillsPanel widget
     mp_atmGUI->addWidget(mp_billsPanel);
 
@@ -101,13 +102,21 @@ simulation::ATMPanel* simulation::GUI::getATMPanel() const
 
 banking::Card* simulation::GUI::readCard()
 {
-    mp_cardPanel->show();
-    mp_cardPanel->m_loop.exec();
-    int cardNumber = mp_cardPanel->readCardNumber();   
+    qDebug()<< "switch panel";
+    mp_atmGUI->setCurrentWidget(mp_cardPanel);
+    //mp_cardPanel->show();
+    qDebug()<< "loop start";
+    mp_cardPanel->m_eventLoop.exec();
+    qDebug()<< "loop quit";
+    qDebug()<< "read card number";
+    int cardNumber = mp_cardPanel->readCardNumber();
+    //mp_cardPanel->close();
+    qDebug()<< "cardNumber = "<<cardNumber;
     mp_atmGUI->setCurrentWidget(mp_atmPanel);
 
     if (cardNumber > 0){
-        mp_card->setNumber(cardNumber);
+        // create a Card object
+        mp_card = new banking::Card(cardNumber);
         return mp_card;
     }
     else
@@ -117,7 +126,7 @@ banking::Card* simulation::GUI::readCard()
 banking::Money* simulation::GUI::getInitialCash()
 {
     mp_atmGUI->setCurrentWidget(mp_billsPanel);
-    mp_billsPanel->m_loop.exec();
+    mp_billsPanel->m_eventLoop.exec();
     int numberOfBills = mp_billsPanel->readBills();
     mp_atmGUI->setCurrentWidget(mp_atmPanel);
 //    mp_money->setMoney(20*numberOfBills);
