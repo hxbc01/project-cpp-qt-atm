@@ -19,5 +19,5 @@ atm::physical::OperatorPanel::~OperatorPanel()
 
 banking::Money* atm::physical::OperatorPanel::getInitialCash()
 {
-    return simulation::Simulation::getInstance(mp_atm)->getInitialCash();
+    return simulation::Simulation::getInstance()->getInitialCash();
 }
