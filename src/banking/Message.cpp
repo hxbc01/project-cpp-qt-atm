@@ -1,6 +1,6 @@
 #include "Message.h"
-#include "Card.h"
 #include "Money.h"
+#include "Card.h"
 
 banking::Message::Message()
 {
@@ -70,6 +70,7 @@ banking::Money* banking::Message::getAmount() const
 QString banking::Message::toString()
 {
     QString result ="";
+    Money l_0_money(0);
     switch (m_messageCode)
     {
         case WITHDRAWAL:
@@ -108,7 +109,8 @@ QString banking::Message::toString()
         result += " TO  " + QString::number(m_toAccount);
     else
         result += " NO TO";
-    if (! mp_amount->lessEqual(new Money(0)))
+    
+    if (! mp_amount->lessEqual(&l_0_money))
         result += " " + mp_amount->toString();
     else
         result += " NO AMOUNT";
