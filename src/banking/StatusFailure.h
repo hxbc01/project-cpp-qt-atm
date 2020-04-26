@@ -29,16 +29,16 @@ public:
 
     /** Destructor
      */
-    ~StatusFailure();
+    ~StatusFailure() override;
     /** status represents failure so return false
      */
-    bool isSuccess();
+    bool isSuccess() override;
     /** failure not due to invalid PIN
      */
-    bool isInvalidPIN();
+    bool isInvalidPIN() override;
     /** return failure message
      */
-    QString getMessage();
+    QString getMessage() override;
 
 protected:
 
