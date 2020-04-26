@@ -17,7 +17,6 @@ int main(int argc, char *argv[])
 
     ATMMainWindow ATMMain(p_ATMSimulation);
     ATMMain.show();
-    myATM.startATMThread();
 
     //qDebug()<<ATMMain.size();
     return ATMApp.exec();
