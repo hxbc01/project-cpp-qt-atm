@@ -1,5 +1,4 @@
 #include <QDebug>
-#include <QThread>
 #include "ATM.h"
 #include "CustomerConsole.h"
 #include "CardReader.h"
@@ -10,10 +9,11 @@
 #include "OperatorPanel.h"
 #include "ReceiptPrinter.h"
 #include "Money.h"
-
 #include "Session.h"
 
-atm::ATM::ATM(int a_id, QString a_place, QString a_bankName, QString a_bankAddress) : ATMThread()
+std::exception_ptr atm::ATM::p_cancelled = nullptr;
+
+atm::ATM::ATM(const int &a_id, const QString &a_place, const QString &a_bankName, const QString &a_bankAddress) : ATMThread()
 {
     m_id = a_id;
     m_place = a_place;
@@ -39,11 +39,19 @@ atm::ATM::ATM(int a_id, QString a_place, QString a_bankName, QString a_bankAddre
     m_state = OFF_STATE;
     m_switchOn = false;
     m_cardInserted = false;
-    m_stopATMThread = false;
+    m_ATMThreadStopped = false;
 
-    // connect to own signal to own slot and hence "translate" it
+
+    // connect own signal to own slot and hence "translate" it
     connect(this, SIGNAL(performStartupSignal()),
-                   this, SLOT(performStartup()));
+                   this, SLOT(performStartup()),Qt::BlockingQueuedConnection);
+    connect(this, SIGNAL(customerConsoleDisplaySignal(const QString&)),
+                   this, SLOT(customerConsoleDisplay(const QString&)),Qt::BlockingQueuedConnection);
+
+    connect(this, SIGNAL(createSessionSignal()),
+                   this, SLOT(createSession()));
+
+    startATMThread();
 }
 atm::ATM::~ATM()
 {
@@ -75,26 +83,26 @@ atm::ATM::~ATM()
         qDebug()<< "Thread joined";
         ATMThread.join();
     }
+    stopATMThread();
 
 
 }
 
 void atm::ATM::run()
 {
-    Session *lp_currentSession = nullptr;
-    while (!m_stopATMThread)
-    {
-        //qDebug()<< "enter while loop";
 
+
+    while (!m_ATMThreadStopped)
+    {
         switch (m_state) {
             case OFF_STATE :
             {
-                qDebug()<< "OFF_STATE";
-                mp_customerConsole->display("Not currently available");
-                std::unique_lock<std::mutex> lock(m_mxswitchOn);
+                emit customerConsoleDisplaySignal("Not currently available");
+                // wait for ATM to be turned ON
+                std::unique_lock<std::mutex> lock(m_mxdataMuMutex);
                 try {
-                    while (!m_switchOn && !m_stopATMThread){ // loop to avoid spurious wakeups
-                        m_conditionVariable.wait(lock,[this]{return m_switchOn || m_stopATMThread;});
+                    while (!m_switchOn && !m_ATMThreadStopped){ // loop to avoid spurious wakeups
+                        m_conditionVariable.wait(lock,[&]{return m_switchOn || m_ATMThreadStopped;});
                     }
 
                 } catch (std::exception const& e) {
@@ -102,19 +110,23 @@ void atm::ATM::run()
                 }
                 if (m_switchOn) {
                    emit performStartupSignal();
+                   // wait for startup process
+                   qDebug()<< "statrtup finished";
                    m_state = IDLE_STATE;
                 }
                 break;
             }
             case IDLE_STATE :
             {
+
                 qDebug()<< "IDLE_STATE";
-                mp_customerConsole->display("Please insert your Card");
-                m_cardInserted = false;
-                std::unique_lock<std::mutex> lock(m_mxcardInserted);
+                emit customerConsoleDisplaySignal("Please insert your Card");
+
+
+                std::unique_lock<std::mutex> lock(m_mxdataMuMutex);
                 try {
-                    while (!m_cardInserted && !m_stopATMThread && m_switchOn){ // loop to avoid spurious wakeups
-                        m_conditionVariable.wait(lock,[this]{return m_cardInserted || !m_switchOn || m_stopATMThread;});
+                    while (!m_cardInserted && !m_ATMThreadStopped && m_switchOn){ // loop to avoid spurious wakeups
+                        m_conditionVariable.wait(lock,[&]{return m_cardInserted || !m_switchOn || m_ATMThreadStopped;});
                     }
                 } catch (std::exception const& e) {
                     qDebug()<< e.what();
@@ -123,7 +135,9 @@ void atm::ATM::run()
                 if (m_cardInserted) {
                     // construct session object
                     qDebug()<< "construct session Object";
-                    lp_currentSession = new atm::Session(this);
+
+                    //emit createSessionSignal();
+                    mp_currentSession = new atm::Session(this);
                     m_state = SERVING_CUSTOMER_STATE;
                 }
                 else if (!m_switchOn){
@@ -139,12 +153,17 @@ void atm::ATM::run()
                 qDebug()<< "SERVING_CUSTOMER_STATE";
                 // The following will not return until the session has
                 // completed
-                lp_currentSession->performSession();
+                mp_currentSession->performSession();
+
+
                 m_state = IDLE_STATE;
                 // destruct session object
                 qDebug()<< "destruct session Object after session completed";
-                delete lp_currentSession;
-                lp_currentSession = nullptr;
+                delete mp_currentSession;
+                mp_currentSession = nullptr;
+                qDebug()<< "destruct Card Object after session completed";
+
+
                 break;
             }
         }
@@ -154,33 +173,47 @@ void atm::ATM::run()
 //    qDebug()<< "destruct session Object";
 //    delete lp_currentSession;
 //    lp_currentSession = nullptr;
-qDebug() << "loop thread exited";
+qDebug() << "main loop thread exited";
 }
 
 
+void atm::ATM::customerConsoleDisplay(const QString &ar_text)
+{
+    mp_customerConsole->display(ar_text);
+
+
+}
+
 void atm::ATM::startATMThread()
 {
+
         ATMThread = std::thread(&atm::ATM::run,this);
 }
 
 void atm::ATM::switchOn()
 {
-    std::lock_guard<std::mutex> lock(m_mxswitchOn);
-    m_switchOn = true;
+    {
+        std::lock_guard<std::mutex> lock(m_mxdataMuMutex);
+        m_switchOn = true;
+    }
     m_conditionVariable.notify_one();
 }
 
 void atm::ATM::switchOff()
 {
-    std::lock_guard<std::mutex> lock(m_mxswitchOn);
-    m_switchOn = false;
+    {
+        std::lock_guard<std::mutex> lock(m_mxdataMuMutex);
+        m_switchOn = false;
+    }
     m_conditionVariable.notify_one();
 }
 
 void atm::ATM::cardInserted()
 {
-    std::lock_guard<std::mutex> lock(m_mxcardInserted);
-    m_cardInserted = true;
+    {
+        std::lock_guard<std::mutex> lock(m_mxdataMuMutex);
+        m_cardInserted = true;
+    }
     m_conditionVariable.notify_one();
 
 }
@@ -191,11 +224,24 @@ void atm::ATM::mainWindowClosed()
     stopATMThread();
 
 }
+bool atm::ATM::isATMThreadRunning()
+{
+    if (m_ATMThreadStopped){
+        return false;
+    } else {
+        return true;
+    }
+
+}
 
 void atm::ATM::stopATMThread()
 {
-    m_stopATMThread = true;
+    {
+        std::lock_guard<std::mutex> lock(m_mxdataMuMutex);
+        m_ATMThreadStopped = true;
+    }
     m_conditionVariable.notify_one();
+
 
 }
 
@@ -208,6 +254,54 @@ void atm::ATM::performStartup()
 
 //    mp_cashDispenser->setInitialCashOnATM(&l_initialCash);
 //    mp_networkToBank->openConnection();
+
+}
+
+void atm::ATM::createSession()
+{
+    mp_currentSession = new atm::Session(this);
+}
+
+void atm::ATM::readCard()
+{
+    {
+        std::lock_guard<std::mutex> lock(m_mxdataMuMutex);
+        mp_card = mp_cardReader->readCard();
+    }
+//mp_currentSession->mp_card = getCardReader()->readCard();
+//    std::lock_guard<std::mutex> lock(m_mxcardReadingFinished);
+//    m_cardReadingFinished = true;
+//    mp_atm->m_conditionVariable.notify_one();
+
+
+}
+
+void atm::ATM::readPIN(const QString &ar_text)
+{
+    try
+    {
+        {
+            std::lock_guard<std::mutex> lock(m_mxdataMuMutex);
+            m_pin = mp_customerConsole->readPIN(ar_text);
+        }
+    }
+    catch (atm::physical::CustomerConsole::Cancelled &e) {
+        qDebug()<< "ATM e.what()"<<e.what();
+        p_cancelled = std::current_exception();
+
+    }
+
+}
+
+banking::Card* atm::ATM::getCard() const
+{
+       return mp_card;
+
+}
+
+int atm::ATM::getPin() const
+{
+    return m_pin;
 
 }
 

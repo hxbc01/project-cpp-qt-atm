@@ -12,7 +12,6 @@
 #include <thread>
 #include <mutex>
 #include <condition_variable>
-#include <future>
 /** Representation for the ATM itself.  An object of this class "owns"
  *  the objects representing the component parts of the ATM, and the
  *  communications network, and is responsible for creating customer
@@ -20,6 +19,17 @@
  *  This is an active class - when an instance of the class is created,
  *  a thread is executed that actually runs the system.
  */
+namespace atm
+{
+class Session;
+}
+
+namespace banking
+{
+class Card;
+}
+
+
 namespace atm
 {
 namespace physical
@@ -48,7 +58,7 @@ public:
      *  @param bankName the name of the bank owning this ATM
      *  @param bankAddress the Internet address of the bank
      */
-    ATM(int a_id, QString a_place, QString a_bankName, QString a_bankAddress);
+    ATM(const int &a_id, const QString &a_place, const QString &a_bankName, const QString &a_bankAddress);
 
     /** Destructor
      */
@@ -142,19 +152,43 @@ public:
      *  @return receipt printer component of this ATM
      */
     atm::physical::ReceiptPrinter* getReceiptPrinter() const;
+    /** Accessor for Card
+     *
+     *  @return Card component of the user
+     */
+    banking::Card* getCard() const;
+    /** Accessor for PIN
+     *
+     *  @return Pin number of the user
+     */
+    int getPin() const;
+
+    /** Is ATM Thread running
+     *
+     *  @return Thread running status
+     */
+    bool isATMThreadRunning();
 
 
-
-
+    static std::exception_ptr p_cancelled;
 protected:
 
 signals:
      void performStartupSignal();
+     void customerConsoleDisplaySignal(const QString &ar_text);
+     //void readCardSignal();
+     void createSessionSignal();
 
 private slots:
      /** Perform the System Startup use case when switch is turned on
       */
     void performStartup();
+    void customerConsoleDisplay(const QString &ar_text);
+    void readCard();
+    void createSession();
+    void readPIN(const QString &ar_text);
+
+
 
 private:
     /** Perform the System Shutdown use case when switch is turned off
@@ -216,7 +250,15 @@ private:
     /** The ATM's receipt printer
      */
     atm::physical::ReceiptPrinter *mp_receiptPrinter=nullptr;
-
+    /** The ATM's session
+     */
+    atm::Session *mp_currentSession = nullptr;
+    /** Card Object
+     */
+    banking::Card *mp_card=nullptr;
+    /** The PIN entered (or re-entered) by the customer
+     */
+    int m_pin;
 
     // State information
     // Possible values for state
@@ -249,31 +291,20 @@ private:
      *  card
      */
     bool m_cardInserted;
+    /** mutex object to protect shared data
+     */
+    std::mutex m_mxdataMuMutex;
 
-    /** mutex object to protect shared data : bool m_switchOn
-     */
-    std::mutex m_mxswitchOn;
-    /** mutex object to protect shared data : bool m_cardInserted
-     */
-    std::mutex m_mxcardInserted;
     /** condition variable associated with shared data
      */
     std::condition_variable m_conditionVariable;
+
     /** ATM thread object
      */
     std::thread ATMThread;
-    /** ATM stop thread object
+    /** ATM thread stopped
      */
-    std::atomic<bool> m_stopATMThread;
-
-
-
-    bool m_test;
-
-    /** mutex object to protect shared data : bool m_switchOn
-     */
-    std::mutex m_mxtest;
-
+    std::atomic<bool> m_ATMThreadStopped;
 
 
 
@@ -281,3 +312,4 @@ private:
 } // namespace atm
 
 #endif // ATM_H
+
