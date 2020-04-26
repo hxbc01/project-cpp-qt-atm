@@ -62,6 +62,10 @@ public:
 
 
 protected:
+    /** Transaction details portion of the receipt - specific to each type of
+     *  transaction, and therefore filled in by subclasses
+     */
+    QStringList m_detailsPortion;
 
 
 
@@ -70,10 +74,6 @@ private:
     /** Heading portion of the receipt - common to all forms of transactions
      */
     QStringList m_headingPortion;
-    /** Transaction details portion of the receipt - specific to each type of
-     *  transaction, and therefore filled in by subclasses
-     */
-    QStringList m_detailsPortion;
     /** Ending balances portion of the receipt - common to all forms of transactions
      */
     QStringList m_balancesPortion;
