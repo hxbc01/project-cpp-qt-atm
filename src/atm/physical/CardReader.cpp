@@ -1,4 +1,5 @@
 #include <QDebug>
+#include "Simulation.h"
 #include "CardReader.h"
 
 
@@ -19,7 +20,7 @@ atm::physical::CardReader::~CardReader()
 
 banking::Card* atm::physical::CardReader::readCard()
 {
-    //return Simulation.getInstance().readCard();
+    return simulation::Simulation::getInstance(mp_atm)->readCard();
 }
 
 void atm::physical::CardReader::ejectCard()
